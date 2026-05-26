@@ -315,13 +315,12 @@ export default function Home({ setCurrentPage }: HomeProps) {
               {/* Main Photo Wrapper with Scan line effect */}
               <div className="hero-photo-wrapper">
                 <img
-                  src="/images/dante-hero.jpg"
+                  src="/portfolio_web/images/dante-hero.jpg"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=800";
+                    (e.target as HTMLImageElement).src = "/portfolio_web/images/dante-hero.jpg";
                   }}
                   alt="MD Ali Ashraf Yad"
                   className="hero-photo"
-                  referrerPolicy="no-referrer"
                 />
               </div>
             </div>
