@@ -1,0 +1,6 @@
+{
+  "name": "Personal Research Portfolio",
+  "description": "Personal research portfolio website for MD Ali Ashraf Yad based on the Kinetic Lab Design System.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&family=Oswald:wght@700;800&family=Barlow+Condensed:family=Oswald:wght@700;800&family=Barlow+Condensed:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-heading: "Barlow Condensed", "Oswald", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #0a0a0a;
+    color: #cccccc;
+    font-family: "IBM Plex Sans", "Inter", sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbar matching instructions: #1a1a1a track, amber thumb */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFB800;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB800;
+}
+
+/* Global Selection styling */
+::selection {
+  background-color: #FFB800;
+  color: #0c0c0c;
+}
+
+/* Base custom utility patterns for professional polish */
+.border-thin {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.border-amber-subtle {
+  border: 1px solid rgba(255, 184, 0, 0.2);
+}
+
+/* Interactive elements buttons: amber filled -> teal on hover with 200ms transition */
+.btn-amber-filled {
+  background-color: #FFB800;
+  color: #0a0a0a;
+  transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+}
+.btn-amber-filled:hover {
+  background-color: #00d4aa;
+}
+
+/* Mouse subtle ambient parallax light tracker */
+.hero-glow-follow {
+  pointer-events: none;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 184, 0, 0.04), transparent 70%);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Focus utilities matching brand specs */
+.focus-amber-ring:focus-visible {
+  outline: 2px solid #FFB800;
+  outline-offset: 2px;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* Empty required field on failed submit */
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown) {
+  border-color: #ff4560 !important;
+  box-shadow: 0 0 0 1px rgba(255,69,96,0.3) !important;
+}
+
+/* Valid field */
+input:valid:not(:placeholder-shown),
+textarea:valid:not(:placeholder-shown) {
+  border-color: rgba(0,212,170,0.4) !important;
+}
+
+/* Focus state — all fields */
+input:focus, textarea:focus {
+  outline: none !important;
+  border-color: #FFB800 !important;
+  box-shadow: 0 0 0 1px rgba(255,184,0,0.2) !important;
+  background: #111111 !important;
+}
+
+/* Photo container */
+.hero-photo-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Main image */
+.hero-photo {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(20%) contrast(1.05);
+  display: block;
+}
+
+/* Amber border frame — offset */
+.hero-photo-border-frame {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: 8px;
+  bottom: 8px;
+  border: 2px solid #FFB800;
+  z-index: -1;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* Teal corner accent */
+.hero-photo-container::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 3px solid #00d4aa;
+  border-right: 3px solid #00d4aa;
+  pointer-events: none;
+}
+
+/* Hover — frame shifts */
+.hero-photo-container:hover .hero-photo-border-frame {
+  top: -12px;
+  left: -12px;
+  border-color: #00d4aa;
+}
+
+.hero-photo-container:hover .hero-photo {
+  filter: grayscale(0%) contrast(1.05);
+}
+
+.photo-meta {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid rgba(255,184,0,0.2);
+  background: #0f0f0f;
+  width: 100%;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photo-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00d4aa;
+  box-shadow: 0 0 0 0 rgba(0,212,170,0.7);
+  animation: pulse-teal 2s infinite;
+}
+
+@keyframes pulse-teal {
+  0%   { box-shadow: 0 0 0 0 rgba(0,212,170,0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(0,212,170,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,212,170,0); }
+}
+
+.status-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #00d4aa;
+}
+
+.photo-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 4px 0;
+}
+
+.photo-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #FFB800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 0 0 2px 0;
+}
+
+.photo-location {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 0;
+}
+
+/* Scan line effect wrapper */
+.hero-photo-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero-photo-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Identity label */
+.identity-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #FFB800;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+/* Bottom classified label */
+.classified-label {
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #333333;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  /* Photo moves ABOVE the text on mobile */
+  .hero-grid {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .hero-photo-container {
+    max-width: 280px;
+    margin: 0 auto 32px auto;
+  }
+
+  .hero-photo {
+    height: 320px;
+  }
+}
+
+
+
