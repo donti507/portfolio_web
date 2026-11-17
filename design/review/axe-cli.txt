@@ -1,0 +1,74 @@
+Running axe-core 4.14.1 in chrome-headless
+
+Testing http://127.0.0.1:4173/portfolio_web/#/ ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/research ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/fly-connectome ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/physics-residual-aqa ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/trust-but-verify ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/adni-brain-age ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/budgetaware-hpo ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/connectometwin ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/zen-os ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/climateguard ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/cv ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/about ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/photography ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/contact ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/missing ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+
+Testing http://127.0.0.1:4173/portfolio_web/#/projects/missing ... please wait, this may take a minute.
+Waiting for 950 milliseconds after page loads...
+ 0 violations found!
+Testing complete of 17 pages
+
+Please note that only 20% to 50% of all accessibility issues can automatically be detected.
+Manual testing is always required. For more information see:
+https://dequeuniversity.com/class/testing

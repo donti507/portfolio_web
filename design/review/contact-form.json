@@ -1,0 +1,9 @@
+{
+  "scenarios": [
+    "Blank form fails native validation",
+    "Honeypot blocks submission",
+    "Mocked delivery succeeds, preserves template fields, and resets the form",
+    "Mocked delivery error keeps the message and allows retry"
+  ],
+  "sentEmails": 0
+}

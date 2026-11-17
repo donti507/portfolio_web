@@ -1,0 +1,342 @@
+{
+  "axeVersion": "4.14.1",
+  "results": [
+    {
+      "route": "/",
+      "device": "desktop",
+      "violations": [],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "route": "/research",
+      "device": "desktop",
+      "violations": [],
+      "passes": 35,
+      "incomplete": []
+    },
+    {
+      "route": "/projects",
+      "device": "desktop",
+      "violations": [],
+      "passes": 42,
+      "incomplete": []
+    },
+    {
+      "route": "/projects/fly-connectome",
+      "device": "desktop",
+      "violations": [],
+      "passes": 41,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/physics-residual-aqa",
+      "device": "desktop",
+      "violations": [],
+      "passes": 37,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/trust-but-verify",
+      "device": "desktop",
+      "violations": [],
+      "passes": 35,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/adni-brain-age",
+      "device": "desktop",
+      "violations": [],
+      "passes": 35,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/budgetaware-hpo",
+      "device": "desktop",
+      "violations": [],
+      "passes": 37,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/connectometwin",
+      "device": "desktop",
+      "violations": [],
+      "passes": 37,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/zen-os",
+      "device": "desktop",
+      "violations": [],
+      "passes": 35,
+      "incomplete": []
+    },
+    {
+      "route": "/projects/climateguard",
+      "device": "desktop",
+      "violations": [],
+      "passes": 35,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/cv",
+      "device": "desktop",
+      "violations": [],
+      "passes": 36,
+      "incomplete": []
+    },
+    {
+      "route": "/about",
+      "device": "desktop",
+      "violations": [],
+      "passes": 42,
+      "incomplete": []
+    },
+    {
+      "route": "/photography",
+      "device": "desktop",
+      "violations": [],
+      "passes": 29,
+      "incomplete": []
+    },
+    {
+      "route": "/contact",
+      "device": "desktop",
+      "violations": [],
+      "passes": 37,
+      "incomplete": []
+    },
+    {
+      "route": "/missing",
+      "device": "desktop",
+      "violations": [],
+      "passes": 29,
+      "incomplete": []
+    },
+    {
+      "route": "/projects/missing",
+      "device": "desktop",
+      "violations": [],
+      "passes": 29,
+      "incomplete": []
+    },
+    {
+      "route": "/",
+      "device": "mobile",
+      "violations": [],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "route": "/research",
+      "device": "mobile",
+      "violations": [],
+      "passes": 36,
+      "incomplete": []
+    },
+    {
+      "route": "/projects",
+      "device": "mobile",
+      "violations": [],
+      "passes": 42,
+      "incomplete": []
+    },
+    {
+      "route": "/projects/fly-connectome",
+      "device": "mobile",
+      "violations": [],
+      "passes": 42,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/physics-residual-aqa",
+      "device": "mobile",
+      "violations": [],
+      "passes": 38,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/trust-but-verify",
+      "device": "mobile",
+      "violations": [],
+      "passes": 36,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/adni-brain-age",
+      "device": "mobile",
+      "violations": [],
+      "passes": 36,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/budgetaware-hpo",
+      "device": "mobile",
+      "violations": [],
+      "passes": 38,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/connectometwin",
+      "device": "mobile",
+      "violations": [],
+      "passes": 38,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        },
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/zen-os",
+      "device": "mobile",
+      "violations": [],
+      "passes": 36,
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/projects/climateguard",
+      "device": "mobile",
+      "violations": [],
+      "passes": 35,
+      "incomplete": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious"
+        }
+      ]
+    },
+    {
+      "route": "/cv",
+      "device": "mobile",
+      "violations": [],
+      "passes": 37,
+      "incomplete": []
+    },
+    {
+      "route": "/about",
+      "device": "mobile",
+      "violations": [],
+      "passes": 42,
+      "incomplete": []
+    },
+    {
+      "route": "/photography",
+      "device": "mobile",
+      "violations": [],
+      "passes": 31,
+      "incomplete": []
+    },
+    {
+      "route": "/contact",
+      "device": "mobile",
+      "violations": [],
+      "passes": 37,
+      "incomplete": []
+    },
+    {
+      "route": "/missing",
+      "device": "mobile",
+      "violations": [],
+      "passes": 31,
+      "incomplete": []
+    },
+    {
+      "route": "/projects/missing",
+      "device": "mobile",
+      "violations": [],
+      "passes": 31,
+      "incomplete": []
+    }
+  ]
+}

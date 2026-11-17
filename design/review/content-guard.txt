@@ -1,0 +1,3 @@
+Content guard passed: 43 built files scanned, 38 prohibited strings checked.
+Negative control rejected a temporary unverified slug:
+content-guard-probe.txt: banglatruth
