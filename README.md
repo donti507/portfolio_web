@@ -1,18 +1,24 @@
+# Md Ali Ashraf Yad · Research portfolio
 
+A research portfolio covering NeuroAI, connectomics, HPC and reliable ML. The production URL is [donti507.github.io/portfolio_web](https://donti507.github.io/portfolio_web/).
 
-# Run and deploy your AI Studio app
+## Local development
 
-This contains everything you need to run your app locally.
+```sh
+npm install
+npm run dev
+```
 
-View your app in AI Studio: https://ai.studio/apps/6e7e30b5-1929-4f68-9cfb-68bc871728cb
+Open the Vite URL under `/portfolio_web/`. Browser navigation uses hash routes so that direct links work on GitHub Pages. To validate the production bundle, run `npm run lint`, `npm run build`, then `node scripts/check-content.mjs`.
 
-## Run Locally
+The form uses the three settings in `.env.example`. Copy the example to `.env.local` to configure EmailJS locally. Without them, the Contact page displays an email fallback.
 
-**Prerequisites:**  Node.js
+## Content
 
+Add projects in `src/data/projects.ts` and update personal and research information in `src/data/site.ts`. Use verified data and links. Entries marked `verify: true` are excluded from the published site. Stitch exports in `design/stitch` are visual references. Preserve their layout cues and use the verified data files for content.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Place verified image assets in `public/projects/<slug>/` and record dimensions in `src/data/figure-dimensions.json`. When the owner supplies the CV PDF, put it at `public/Yad_CV_Research.pdf`. The download links appear automatically.
+
+## Deployment
+
+The GitHub Actions workflow builds and validates pushes to `main`, then publishes the `dist/` artifact through GitHub Pages. GitHub Pages must use GitHub Actions as its source. Configure the optional EmailJS values as repository secrets using the names in `.env.example`.
