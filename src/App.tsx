@@ -1,8 +1,11 @@
 import { useEffect, type ReactNode } from 'react';
-import { HashRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { person } from './data/site';
 import NotFound from './pages/NotFound';
+import ProjectDetail from "./pages/ProjectDetail";
+import { projectBySlug } from "./data/catalog";
+import { useParams } from "react-router-dom";
 import Projects from "./pages/Projects";
 import { Shell } from "./components/Shell";
 
@@ -13,8 +16,8 @@ function Page({ title, children }: { title: string; children?: ReactNode }) {
 
 function Detail() {
   const { slug } = useParams();
-  void slug;
-  return <Page title="Page not found"><NotFound /></Page>;
+  const project = projectBySlug(slug ?? "");
+  return <Page title={project?.shortTitle ?? "Page not found"}><ProjectDetail /></Page>;
 }
 
 function Pages() {
