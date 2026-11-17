@@ -2,6 +2,12 @@ import { useEffect, type ReactNode } from 'react';
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { person } from './data/site';
+import Home from "./pages/Home";
+import Research from "./pages/Research";
+import CV from "./pages/CV";
+import About from "./pages/About";
+import Photography from "./pages/Photography";
+import Contact from "./pages/Contact";
 import NotFound from './pages/NotFound';
 import ProjectDetail from "./pages/ProjectDetail";
 import { projectBySlug } from "./data/catalog";
@@ -28,14 +34,14 @@ function Pages() {
     <motion.div key={pathname} initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 0.15 }}>
       <Routes>
-        <Route path="/" element={<Page title="Home" />} />
-        <Route path="/research" element={<Page title="Research" />} />
+        <Route path="/" element={<Page title="Home"><Home /></Page>} />
+        <Route path="/research" element={<Page title="Research"><Research /></Page>} />
         <Route path="/projects" element={<Page title="Projects"><Projects /></Page>} />
         <Route path="/projects/:slug" element={<Detail />} />
-        <Route path="/cv" element={<Page title="CV" />} />
-        <Route path="/about" element={<Page title="About" />} />
-        <Route path="/photography" element={<Page title="Photography" />} />
-        <Route path="/contact" element={<Page title="Contact" />} />
+        <Route path="/cv" element={<Page title="CV"><CV /></Page>} />
+        <Route path="/about" element={<Page title="About"><About /></Page>} />
+        <Route path="/photography" element={<Page title="Photography"><Photography /></Page>} />
+        <Route path="/contact" element={<Page title="Contact"><Contact /></Page>} />
         <Route path="*" element={<Page title="Page not found"><NotFound /></Page>} />
       </Routes>
     </motion.div>

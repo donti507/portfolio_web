@@ -131,3 +131,13 @@
   :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
   ::selection { background: var(--color-tint); }
 }
+
+@page { size: A4; margin: 14mm; }
+@media print {
+  body { background: white; color: black; font-size: 11pt; }
+  body:has(.cv) #root > div > :is(header, footer) { display: none; }
+  main:has(.cv) { padding: 0; }
+  .cv { max-width: none; }
+  .cv :is(h2, h3) { break-after: avoid; }
+  .cv :is(article, li) { break-inside: avoid; }
+}

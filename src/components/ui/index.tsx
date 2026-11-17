@@ -49,8 +49,9 @@ export function FilterChips({ options, value, onChange, name }: {
 }
 
 import figureDimensions from "../../data/figure-dimensions.json";
+import photos from "../../data/photography.json";
 interface MediaSize { width: number; height: number }
-const dimensions: Record<string, MediaSize> = figureDimensions;
+const dimensions: Record<string, MediaSize> = { ...figureDimensions, ...Object.fromEntries(photos.map(photo => [photo.src, photo])) };
 export function Figure({ figure, priority = false, interactive = true }: {
   figure: FigureData; priority?: boolean; interactive?: boolean;
 }) {
