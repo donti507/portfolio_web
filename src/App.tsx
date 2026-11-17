@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes, useLocation, useParams } from 'react-router-
 import { motion, useReducedMotion } from 'motion/react';
 import { person } from './data/site';
 import NotFound from './pages/NotFound';
+import Projects from "./pages/Projects";
 import { Shell } from "./components/Shell";
 
 function Page({ title, children }: { title: string; children?: ReactNode }) {
@@ -26,7 +27,7 @@ function Pages() {
       <Routes>
         <Route path="/" element={<Page title="Home" />} />
         <Route path="/research" element={<Page title="Research" />} />
-        <Route path="/projects" element={<Page title="Projects" />} />
+        <Route path="/projects" element={<Page title="Projects"><Projects /></Page>} />
         <Route path="/projects/:slug" element={<Detail />} />
         <Route path="/cv" element={<Page title="CV" />} />
         <Route path="/about" element={<Page title="About" />} />
