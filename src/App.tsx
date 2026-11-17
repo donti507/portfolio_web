@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes, useLocation, useParams } from 'react-router-
 import { motion, useReducedMotion } from 'motion/react';
 import { person } from './data/site';
 import NotFound from './pages/NotFound';
+import { Shell } from "./components/Shell";
 
 function Page({ title, children }: { title: string; children?: ReactNode }) {
   useEffect(() => { document.title = `${title} · ${person.name}`; }, [title]);
@@ -19,7 +20,7 @@ function Pages() {
   const { pathname } = useLocation();
   const reducedMotion = useReducedMotion();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
-  return <main id="main-content" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-8">
+  return <main tabIndex={-1} id="main-content" className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-8">
     <motion.div key={pathname} initial={reducedMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 0.15 }}>
       <Routes>
@@ -38,5 +39,5 @@ function Pages() {
 }
 
 export default function App() {
-  return <HashRouter><Pages /></HashRouter>;
+  return <HashRouter><Shell><Pages /></Shell></HashRouter>;
 }
