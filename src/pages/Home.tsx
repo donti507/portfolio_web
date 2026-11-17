@@ -17,10 +17,10 @@ export default function Home() {
   const figure = projectBySlug('fly-connectome')?.figures?.[0];
   const showFigure = figure && hasAsset(figure.src);
   return <div className="mx-auto max-w-[1120px] space-y-12">
-    <section className={`grid items-center gap-7 ${showFigure ? 'md:grid-cols-[1.15fr_1fr]' : ''}`}>
+    <section className={`grid items-start gap-7 ${showFigure ? 'md:grid-cols-[1.4fr_1fr]' : ''}`}>
       <div className="space-y-5">
         <p className={label}>{person.name} · Wrocław</p>
-        <h1>{home.heroTitle}</h1>
+        <h1 className="md:text-[42px]">{home.heroTitle}</h1>
         <p className="max-w-3xl text-muted">{home.heroBody}</p>
         <div className="flex flex-wrap gap-2">
           <Button href={person.links.arxiv} variant="primary">Read the preprint</Button>

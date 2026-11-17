@@ -136,8 +136,16 @@
 @media print {
   body { background: white; color: black; font-size: 11pt; }
   body:has(.cv) #root > div > :is(header, footer) { display: none; }
-  main:has(.cv) { padding: 0; }
+  main:has(.cv) { min-height: 0; padding: 0; }
   .cv { max-width: none; }
   .cv :is(h2, h3) { break-after: avoid; }
   .cv :is(article, li) { break-inside: avoid; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -56,10 +56,11 @@ export function Figure({ figure, priority = false, interactive = true }: {
   figure: FigureData; priority?: boolean; interactive?: boolean;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const [open, setOpen] = useState(false);
   if (!hasAsset(figure.src)) return null;
   const webp = figure.src.replace(/\.png$/, '.webp');
   const size = dimensions[figure.src];
-  const image = (large = false) => <picture>
+  const image = (large = false) => <picture className="block">
     {webp !== figure.src && hasAsset(webp) && <source type="image/webp" srcSet={asset(webp)} />}
     <img src={asset(figure.src)} alt={figure.alt} width={size?.width} height={size?.height}
       loading={priority || large ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : undefined}
@@ -67,26 +68,39 @@ export function Figure({ figure, priority = false, interactive = true }: {
   </picture>;
   return <figure className={panel + ' overflow-hidden p-3'}>
     {interactive ? <button type="button" aria-label={`Enlarge ${figure.alt}`} className="block w-full"
-      onClick={() => dialog.current?.showModal()}>{image()}</button> : image()}
+      onClick={() => { dialog.current?.showModal(); setOpen(true); }}>{image()}</button> : image()}
     {figure.caption && <figcaption className="mt-2 text-sm text-muted">{figure.caption}</figcaption>}
-    {interactive && <dialog ref={dialog} aria-label={figure.alt}
+    {interactive && <dialog ref={dialog} onClose={() => setOpen(false)} aria-label={figure.alt}
       className="fixed inset-0 m-auto max-h-[94dvh] max-w-[94vw] rounded-lg bg-card p-4 text-ink backdrop:bg-ink/75">
       <button type="button" autoFocus aria-label="Close image" className="mb-2 ml-auto block p-2"
         onClick={() => dialog.current?.close()}><X /></button>
-      {image(true)}
+      {open && image(true)}
     </dialog>}
   </figure>;
 }
 
-export function ProjectCard({ project, variant = 'compact' }: { project: ProjectDetail; variant?: 'compact' | 'featured' }) {
+export function ProjectCard({ project, variant = 'compact', placement }: {
+  project: ProjectDetail;
+  variant?: 'compact' | 'featured';
+  placement?: 'lead' | 'support';
+}) {
   const featured = variant === 'featured';
+  const figure = featured ? project.figures?.[0] : undefined;
   const links = project.links.filter(link => link.kind === 'paper' || link.kind === 'code');
-  return <article className={panel + ' relative flex min-w-0 flex-col gap-4 p-5 hover:border-primary/40'}>
-    {featured && project.figures?.[0] && <Figure figure={project.figures[0]} interactive={false} />}
+  const artwork = figure && <Figure figure={placement === 'support' ? { ...figure, caption: '' } : figure} interactive={false} />;
+  return <article className={panel + ' relative flex min-w-0 flex-col gap-3 p-5 hover:border-primary/40' +
+    (placement === 'lead' ? ' lg:row-span-2' : '')}>
+    {!placement && artwork}
     <div><StatusPill>{project.status} · {project.dates}</StatusPill></div>
-    <h3><Link className="text-ink after:absolute after:inset-0 after:rounded-lg focus-visible:after:outline-2 focus-visible:after:outline-primary"
-      to={`/projects/${project.slug}`}>{featured ? project.title : project.shortTitle}</Link></h3>
-    <p className="text-sm text-muted">{project.oneLiner}</p>
+    <div className={placement === 'support' && figure && hasAsset(figure.src) ? 'grid grid-cols-[5rem_minmax(0,1fr)] items-start gap-3' : ''}>
+      {placement === 'support' && artwork}
+      <div className="space-y-2">
+        <h3><Link className="text-ink after:absolute after:inset-0 after:rounded-lg focus-visible:after:outline-2 focus-visible:after:outline-primary"
+          to={`/projects/${project.slug}`}>{featured ? project.title : project.shortTitle}</Link></h3>
+        <p className="text-sm text-muted">{project.oneLiner}</p>
+      </div>
+    </div>
+    {placement === 'lead' && artwork}
     {featured && !!project.stats.length && <dl className="grid grid-cols-2 gap-2">{project.stats.slice(0, 2).map(stat => <StatTile key={stat.label} stat={stat} />)}</dl>}
     <Tags values={(featured ? project.stack : project.tags).slice(0, 4)} />
     <div className="mt-auto flex flex-wrap gap-4 border-t border-line pt-3 text-sm">{links.map(link =>
@@ -105,7 +119,6 @@ export function TOC({ sections }: { sections: Array<{ id: string; title: string 
       const current = [...ids].reverse().find(id => (document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= 165);
       setActive(current ?? ids[0]);
     }
-    update();
     window.addEventListener('scroll', update, { passive: true });
     return () => window.removeEventListener('scroll', update);
   }, [sectionIds]);

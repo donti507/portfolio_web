@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { person } from '../data/site';
 import { Link, useParams } from 'react-router-dom';
 import { Button, CodeBlock, Figure, LimitsCallout, SideCard, StatTile, StatusPill, Tags, TOC, label } from '../components/ui';
 import { publishedProjects, projectBySlug } from '../data/catalog';
@@ -44,7 +46,7 @@ function Details({ project }: { project: Project }) {
         <Button key={link.href} href={link.href} variant={link === primary ? 'primary' : 'secondary'}>{link.label}</Button>)}</div>
     </header>
     {!!project.stats.length && <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">{project.stats.map(stat => <StatTile key={stat.label} stat={stat} />)}</dl>}
-    {hasSignatureFigure && project.figures?.[0] && <Figure figure={project.figures[0]} priority />}
+    {project.slug === 'fly-connectome' && project.figures?.[0] && <Figure figure={project.figures[0]} />}
     <Signature project={project} />
     <div className="grid gap-7 lg:grid-cols-[160px_minmax(0,1fr)_230px]">
       <div className="min-w-0"><TOC sections={sections} /></div>
@@ -78,5 +80,8 @@ function Details({ project }: { project: Project }) {
 export default function ProjectDetail() {
   const { slug } = useParams();
   const project = projectBySlug(slug ?? '');
+  useEffect(() => {
+    document.title = `${project?.shortTitle ?? 'Page not found'} · ${person.name}`;
+  }, [project]);
   return project ? <Details project={project} /> : <NotFound />;
 }

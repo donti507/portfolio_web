@@ -7,7 +7,9 @@ export default function Research() {
   return <div className="mx-auto max-w-[1120px] space-y-10">
     <header className="space-y-3 border-b border-line pb-5"><p className={label}>Research</p><h1>Questions I'm working on</h1>
       <p className="text-muted">Two outputs so far, both public, with code.</p></header>
-    <Interests />
+    <section aria-labelledby="research-interests">
+      <h2 id="research-interests" className="sr-only">Research interests</h2><Interests />
+    </section>
     <section><SectionHeading>Publications</SectionHeading>
       <ol className="space-y-4">{publications.map((publication, index) =>
         <li className="grid grid-cols-[2rem_1fr] gap-2" key={publication.title}>

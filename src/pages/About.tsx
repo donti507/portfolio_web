@@ -39,10 +39,10 @@ export default function About() {
       </div>
       {matches.length > 6 && <Button onClick={() => setExpanded(value => !value)}>{expanded ? 'Show fewer' : `Show all ${matches.length}`}</Button>}
     </section>
-    {!!photos.length && <section><SectionHeading>Photography</SectionHeading>
-      <div className="mb-4 grid grid-cols-3 items-start gap-3">{photos.slice(0, 3).map(photo =>
-        <Figure key={photo.src} figure={photo} interactive={false} />)}</div>
+    <section><SectionHeading>Photography</SectionHeading>
+      {!!photos.length && <div className="mb-4 grid grid-cols-3 items-start gap-3">{photos.slice(0, 3).map(photo =>
+        <Figure key={photo.src} figure={photo} interactive={false} />)}</div>}
       <Button to="/photography">See more photos →</Button>
-    </section>}
+    </section>
   </div>;
 }

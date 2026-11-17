@@ -38,8 +38,10 @@ export default function Projects() {
       <FilterChips name="Project topic" options={[{ value: '', label: 'All topics' }, ...topics]} value={tag}
         onChange={value => update('tag', value === tag ? '' : value)} />
     </div>
-    {!!featured.length && <section aria-label="Featured projects" className="grid gap-4 md:grid-cols-3">
-      {featured.map(project => <ProjectCard key={project.slug} project={project} variant="featured" />)}
+    {!!featured.length && <section aria-labelledby="featured-projects" className={featured.length === 3 ? 'grid gap-4 lg:grid-cols-[1.4fr_1fr]' : 'grid gap-4 md:grid-cols-2'}>
+      <h2 id="featured-projects" className="sr-only">Featured projects</h2>
+      {featured.map((project, index) => <ProjectCard key={project.slug} project={project} variant="featured"
+        placement={featured.length === 3 ? (index === 0 ? 'lead' : 'support') : undefined} />)}
     </section>}
     {!!remaining.length && <section>
       <SectionHeading>More projects</SectionHeading>
