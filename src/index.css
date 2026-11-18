@@ -2,6 +2,7 @@
 @source "./App.tsx";
 @source "./pages";
 @source "./components/ui";
+@source "./components/deep";
 @source "./components/Shell.tsx";
 
 @theme {

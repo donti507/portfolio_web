@@ -7,6 +7,8 @@ import { hasAsset } from '../data/assets';
 import type { ProjectDetail as Project } from '../data/projects';
 import NotFound from './NotFound';
 import Signature from './Signature';
+import { deepProjects } from "../data/deep";
+import { DeepDetail } from "../components/deep/DeepDetail";
 
 const unordered = (items: string[]) => <ul className="list-disc space-y-2 pl-5">{items.map(item => <li key={item}>{item}</li>)}</ul>;
 
@@ -14,6 +16,8 @@ function Details({ project }: { project: Project }) {
   const index = publishedProjects.indexOf(project);
   const previous = publishedProjects[index - 1];
   const next = publishedProjects[index + 1];
+  const content = deepProjects[project.slug];
+  if (content) return <DeepDetail project={project} content={content} previous={previous} next={next} />;
   const primary = project.links.find(link => link.kind === 'paper') ??
     project.links.find(link => link.kind === 'demo') ?? project.links.find(link => link.kind === 'code');
   const ongoing = project.status === 'Ongoing' || project.status === 'Pre-analysis';
