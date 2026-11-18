@@ -1,0 +1,34 @@
+{
+  "projects/fly-connectome/fig2.png": {
+    "width": 1600,
+    "height": 592
+  },
+  "projects/fly-connectome/fig3.png": {
+    "width": 1600,
+    "height": 431
+  },
+  "projects/fly-connectome/fig4.png": {
+    "width": 1600,
+    "height": 500
+  },
+  "projects/physics-residual-aqa/figure_1_requirement.png": {
+    "width": 1600,
+    "height": 900
+  },
+  "projects/physics-residual-aqa/figure_2_reality.png": {
+    "width": 1600,
+    "height": 900
+  },
+  "projects/budgetaware-hpo/fig1_method_comparison.png": {
+    "width": 1600,
+    "height": 656
+  },
+  "projects/budgetaware-hpo/fig2_parallelism_degradation.png": {
+    "width": 1600,
+    "height": 656
+  },
+  "projects/connectometwin/anatomy.png": {
+    "width": 791,
+    "height": 681
+  }
+}

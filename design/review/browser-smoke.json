@@ -1,0 +1,34 @@
+{
+  "routes": [
+    "/",
+    "/research",
+    "/projects",
+    "/projects/fly-connectome",
+    "/projects/physics-residual-aqa",
+    "/projects/trust-but-verify",
+    "/projects/adni-brain-age",
+    "/projects/budgetaware-hpo",
+    "/projects/connectometwin",
+    "/projects/zen-os",
+    "/projects/climateguard",
+    "/cv",
+    "/about",
+    "/photography",
+    "/contact",
+    "/missing",
+    "/projects/missing"
+  ],
+  "viewports": [
+    "1440×1000",
+    "390×844"
+  ],
+  "checked": [
+    "navigation and history",
+    "project filter URL and reload",
+    "figure dialog and Escape",
+    "section focus",
+    "local images and asset responses",
+    "horizontal overflow"
+  ],
+  "issues": []
+}
