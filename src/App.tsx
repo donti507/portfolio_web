@@ -10,7 +10,9 @@ const About = lazy(() => import("./pages/About"));
 const Photography = lazy(() => import("./pages/Photography"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const loadProjectDetail = () => import("./pages/ProjectDetail");
+let firstDetail = window.location.hash.startsWith('#/projects/') ? loadProjectDetail() : undefined;
+const ProjectDetail = lazy(() => firstDetail ??= loadProjectDetail());
 const Projects = lazy(() => import("./pages/Projects"));
 
 function Page({ title, children }: { title: string; children?: ReactNode }) {

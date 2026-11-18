@@ -25,6 +25,13 @@ const prohibited = new Set([
   'Neural Vector Field', 'doctoral tenure', 'Telemetry Normal', '918239', 'Lustre',
   '[to fill]', 'UK Biobank', 'ALAN-NeuroNet', '47K', 'In Press', 'IN PRESS', 'Pan-Cancer',
   'RICA', '577 758 192',
+  '24,000', 'World Aquatics', 'Hanavan', 'Diving48', 'PINN',
+  'Physics-Informed Neural Network', 'Wilson-Cowan', '20,000 angular', 'PSD surface',
+  '1.8°', '32% more', 'ASHA', 'WAL', 'Polars', 'Appainer', 'Apptainer', 'ghcr.io',
+  'RFC 5545', 'CalDAV', 'AES-256', 'TxID', 'Determinism Score', '#CK-', 'ARCH-LOG',
+  'Monte Carlo', 'p < 0.001', 'Hugging Face Trial', 'carbon', 'Oct 2024 – May 2025',
+  'Sep 2024 – Sep 2026', 'Jan 2024 – Nov 2024', 'May 2024 – Oct 2024',
+  'Gaussian Processes', 'neuroglancer', 'NetworkX', 'JAX',
   ...projects.filter(entry => entry.verify).flatMap(entry => [entry.title, entry.shortTitle, entry.slug]),
   ...experience.filter(entry => entry.verify).map(entry => entry.role),
 ]);
