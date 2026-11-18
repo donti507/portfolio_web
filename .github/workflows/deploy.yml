@@ -29,7 +29,14 @@ jobs:
       - run: npm run build
       - run: node scripts/check-content.mjs
       - name: Serve the production build
-        run: npm run preview -- --host 127.0.0.1 --strictPort > /tmp/portfolio-preview.log 2>&1 &
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/portfolio-preview.log 2>&1 &
+          if ! curl --fail --silent --show-error --output /dev/null \
+            --connect-timeout 2 --max-time 3 --retry 15 --retry-connrefused --retry-delay 1 \
+            http://127.0.0.1:4173/portfolio_web/; then
+            cat /tmp/portfolio-preview.log
+            exit 1
+          fi
       - uses: lycheeverse/lychee-action@v2
         with:
           args: --no-progress --scheme http --scheme https --include '^http://127\.0\.0\.1:4173/portfolio_web/' --base-url http://127.0.0.1:4173/portfolio_web/ 'dist/**/*.html'
