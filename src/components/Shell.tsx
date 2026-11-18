@@ -4,8 +4,10 @@ import { Link, NavLink } from 'react-router-dom';
 import { person } from '../data/site';
 import { asset, hasAsset } from '../data/assets';
 import tracks from '../data/music.json';
+import { youtubeTracks } from "../data/youtube-music";
 
 const MusicPlayer = lazy(() => import('./MusicPlayer'));
+const YouTubeMusic = lazy(() => import("./YouTubeMusic"));
 
 const navigation = [
   ['Home', '/'], ['Research', '/research'], ['Projects', '/projects'],
@@ -64,7 +66,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <a className="hidden p-2 sm:block" aria-label="Google Scholar" href={person.links.scholar}><GraduationCap size={20} /></a>
           <a className="hidden p-2 sm:block" aria-label="Email" href={email}><Mail size={20} /></a>
           {themeButton}
-          {!!tracks.length && <Suspense fallback={null}><MusicPlayer /></Suspense>}
+          {(youtubeTracks.length > 0 || tracks.length > 0) && <Suspense fallback={null}>
+            {youtubeTracks.length > 0 ? <YouTubeMusic /> : <MusicPlayer />}
+          </Suspense>}
           <button type="button" className="p-2 lg:hidden" aria-label="Open menu" onClick={() => menu.current?.showModal()}><Menu /></button>
         </div>
       </div>
