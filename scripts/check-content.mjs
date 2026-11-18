@@ -32,7 +32,7 @@ const prohibited = new Set([
   'RFC 5545', 'CalDAV', 'AES-256', 'TxID', 'Determinism Score', '#CK-', 'ARCH-LOG',
   'Monte Carlo', 'p < 0.001', 'Hugging Face Trial', 'carbon', 'Oct 2024 – May 2025',
   'Sep 2024 – Sep 2026', 'Jan 2024 – Nov 2024', 'May 2024 – Oct 2024',
-  'Gaussian Processes', 'neuroglancer', 'NetworkX', 'JAX',
+  'Gaussian Processes', 'neuroglancer', 'NetworkX', 'JAX', 'Sole author', 'sole author',
   ...projects.filter(entry => entry.verify).flatMap(entry => [entry.title, entry.shortTitle, entry.slug]),
   ...experience.filter(entry => entry.verify).map(entry => entry.role),
 ]);
