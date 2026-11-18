@@ -455,3 +455,58 @@ deepProjects['trust-but-verify'] = {
   ],
   dossier: {datasets: ['SEC EDGAR filings', 'Synthetic documents']},
 };
+
+const adniWindows: Row[] = [
+  {cells: ['MRI', '≤180 days from index']},
+  {cells: ['Amyloid PET', '≤180 days from index']},
+  {cells: ['MRI to amyloid PET', '≤180 days apart']},
+  {cells: ['Cognition baseline', '≤180 days from index']},
+  {cells: ['Diagnosis baseline', '≤180 days from index']},
+  {cells: ['Plasma p-tau217', '≤365 days from index']},
+  {cells: ['Follow-up', 'Censored at 1,826 days (5 years)']},
+  {cells: ['12 months', '365 days']},
+  {cells: ['Record selection', 'Nearest qualifying record by absolute days']},
+];
+
+deepProjects['adni-brain-age'] = {
+  metrics: [
+    {label: 'Data sources', value: '11', caption: 'ADNI tables specified in the plan', tone: 'neutral', icon: 'files'},
+    {label: 'Follow-up', value: '5 years', caption: 'Censored at 1,826 days', tone: 'teal', icon: 'clock'},
+    {label: 'Imaging window', value: '±180 days', caption: 'MRI and amyloid PET relative to index', tone: 'primary', icon: 'target'},
+    {label: 'Multiple testing', value: 'FDR', caption: 'Multiple-testing control', tone: 'coral', icon: 'shield'},
+  ],
+  artifact: {title: 'Imaging, index and follow-up', eyebrow: 'Preregistered design', blocks: [{
+    kind: 'timeline', title: 'Record selection windows', anchor: 'Index: earliest qualifying tau PET',
+    stages: [
+      {title: 'MRI and amyloid PET', body: 'Each within ±180 days of the index and within 180 days of each other.'},
+      {title: 'Baseline outcome records', body: 'Cognition and diagnosis within 180 days of the index.'},
+      {title: 'Plasma p-tau217', body: 'Within 365 days of the index.'},
+      {title: 'Follow-up for cognitive decline', body: 'From index to index + 1,826 days.'},
+    ],
+  }]},
+  sections: [
+    {id: 'question', title: 'The question', base: ['question'], blocks: []},
+    {id: 'importance', title: 'Why it matters', base: ['why'], blocks: []},
+    {id: 'design', title: 'Decided before seeing data', blocks: [{kind: 'table', title: 'Eligibility windows', headers: ['Record or rule', 'Window'], rows: adniWindows}]},
+    {id: 'data', title: 'Data', blocks: [{kind: 'tags', items: [
+      'UCSFFSX7 · FreeSurfer MRI', 'UCBERKELEY_AMY_6MM · amyloid PET', 'UCBERKELEY_TAU_6MM · tau PET',
+      'UPENN_PLASMA_FUJIREBIO_QUANTERIX · plasma', 'UWNPSYCHSUM · cognition', 'ADSP_PHC_COGN · cognition',
+      'CDR', 'DXSUM · diagnosis', 'PTDEMOG · demographics', 'AMYQC · QC', 'APOERES · APOE',
+    ]}]},
+    {id: 'log', title: 'Decision log', blocks: [{kind: 'timeline', title: 'Pre-analysis decisions', anchor: 'Before any count', stages: [
+      {title: 'D-000', body: 'Data provenance and attestation that no raw CSV was opened.'},
+      {title: 'D-001', body: 'Aligned with the proposal: amyloid window 180 days and FDR instead of Holm.'},
+      {title: 'D-002', body: 'Addressed a blocked review: confidence interval excludes null, no fallback, and named approvers.'},
+      {title: 'D-003', body: 'Listed open decisions.'},
+      {title: 'D-004', body: 'Recorded untestable assumptions.'},
+      {title: 'D-005', body: 'Fixed engineer clarifications before any count.'},
+    ]}]},
+    {id: 'open', title: 'Open decisions', blocks: [{kind: 'list', items: [
+      'Cognition source: UW, PHC, or UW primary with PHC sensitivity analysis.',
+      'APOE4 in or out of the primary model.', 'Centiloid cutoff.', 'Brain-age feature list.', 'Timeline.',
+    ]}]},
+    {id: 'findings', title: 'Findings', base: ['findings'], blocks: []},
+  ],
+  provenance: 'The decision log fixes the analysis rules before any count. No raw CSV was opened for the provenance attestation.',
+  dossier: {datasets: ['ADNI']},
+};
