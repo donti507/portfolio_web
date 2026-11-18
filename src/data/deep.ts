@@ -344,3 +344,53 @@ deepProjects['connectometwin'] = {
   ],
   dossier: {datasets: ['FlyWire compass circuit']},
 };
+
+deepProjects['zen-os'] = {
+  metrics: [
+    {label: 'Workspace views', value: '6', caption: 'Tasks, Kanban, Calendar, Meetings, Analytics and Link vault', tone: 'primary', icon: 'layers'},
+    {label: 'Voice languages', value: '7', caption: 'Voice input includes Polish', tone: 'teal', icon: 'activity'},
+    {label: 'Automated tests', value: '583', caption: 'Test cases in the project', tone: 'neutral', icon: 'shield'},
+    {label: 'Default rate limit', value: '20/min', caption: 'Per user on the Dante API', tone: 'coral', icon: 'clock'},
+  ],
+  artifact: {title: 'ZEN_OS workspace and Dante', eyebrow: 'Product walkthrough', blocks: [{
+    kind: 'chat', title: 'Illustrative mock-up', lanes: ['Kanban board', 'Calendar and meetings', 'Tasks', 'Link vault'],
+    user: 'Move my thesis meeting to tomorrow at 4', action: 'Updated: Thesis meeting → Wed 16:00 · reason shown', voice: 'Conversation mode',
+  }]},
+  sections: [
+    {id: 'question', title: 'The premise', base: ['question', 'why'], blocks: []},
+    {id: 'features', title: 'Workspace features', blocks: [{kind: 'features', items: [
+      {title: 'Tasks', body: 'Create, update, complete and reopen tasks.'}, {title: 'Kanban board', body: 'View tasks on a board.'},
+      {title: 'Calendar', body: 'Sync with Google Calendar.'}, {title: 'Meetings', body: 'Use a stopwatch and write notes.'},
+      {title: 'Analytics', body: 'View workspace activity and streaks.'}, {title: 'Link vault', body: 'Keep links in the workspace.'},
+    ]}]},
+    {id: 'dante', title: 'What Dante can do', blocks: [{kind: 'list', items: [
+      'Stream answers and stop with Stop or Esc.',
+      'Use tasks, meetings, events, vault, streak, the current date and timezone as context.',
+      'Create, complete, reopen and update tasks.',
+      'Schedule meetings, switch views and filter categories.',
+      'Take voice input in 7 languages, including Polish.',
+      'Read answers aloud with sentence highlighting.',
+      'Run a hands-free conversation mode.',
+      'Remember short preferences that you can inspect and forget.',
+      'Hide <think> reasoning from open models.',
+    ]}]},
+    {id: 'safety', title: 'How Dante stays safe', blocks: [{kind: 'notes', items: [
+      {title: 'Authenticated API', body: '/api/dante needs a valid Supabase login. The default rate limit is 20/min per user.', tone: 'teal'},
+      {title: 'Server-side key', body: 'The LLM key never reaches the browser.'},
+      {title: 'Row-level security', body: 'Every table uses row-level security, with WITH CHECK on inserts.'},
+      {title: 'Visible actions', body: 'Dante displays each change with ✓ or ✗ and the reason.', tone: 'teal'},
+    ]}]},
+    {id: 'architecture', title: 'Architecture', blocks: [
+      {kind: 'flow', title: 'Application data flow', stages: ['React 19 + Vite + Tailwind v4', 'Express API · /api/dante', 'Supabase · auth + Postgres with RLS'],
+        branches: ['Express can also call an OpenAI-compatible LLM (PSNC, vLLM, Ollama, OpenRouter) or Gemini.']},
+      {kind: 'text', text: 'Browser-only local mode works without Supabase. Supabase Realtime syncs across devices, and the Docker image supports runtime-injected configuration.'},
+    ]},
+    {id: 'limits', title: 'Limits', blocks: [{kind: 'limits', items: [
+      {title: 'Voice input', body: 'Requires HTTPS and the browser Web Speech API (Chrome, Edge, Safari). Audio is sent to the browser’s speech service.'},
+    ]}]},
+    {id: 'reproduce', title: 'Run it', blocks: [
+      {kind: 'terminal', file: 'Local development', code: 'npm install\ncp .env.example .env\nnpm run dev'},
+      {kind: 'terminal', file: 'Docker', code: 'docker build -t zen-os .\ndocker run -p 3000:3000 --env-file .env zen-os'},
+    ]},
+  ],
+};
