@@ -5,7 +5,7 @@ import sharp from 'sharp';
 const originals = 'photos/originals';
 const output = 'public/photos';
 const manifest = 'src/data/photos.json';
-const categories = new Set(['wroclaw', 'science-events', 'nature', 'travel']);
+const categories = new Set(['wroclaw', 'science-events', 'nature', 'travel', 'life']);
 const supported = /\.(avif|bmp|dng|gif|heic|heif|jpeg|jpg|jxl|png|tiff?|webp)$/i;
 const generated = /-(800|1600)\.webp$/;
 
