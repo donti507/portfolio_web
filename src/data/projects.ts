@@ -141,7 +141,8 @@ export const projects: ProjectDetail[] = [
     tags: ['Computer Vision', 'Physics-informed ML'],
     dates: 'Nov 2026',
     status: 'Accepted talk',
-    role: 'Sole author',
+    role: 'First author, with N. T. Nabila (Comilla University)',
+    collaborators: 'N. T. Nabila',
     oneLiner: 'Can conservation of angular momentum judge a dive from TV footage? Not yet. Here is exactly how far off the pose models are.',
     question:
       'In the air, a diver’s angular momentum is conserved. A break in that should flag a pose or execution problem without any labels. How precise must monocular pose be before this check works, and are current models that precise?',

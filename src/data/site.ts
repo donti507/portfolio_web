@@ -72,7 +72,7 @@ export const publications = [
   {
     kind: 'Accepted talk',
     title: 'Physics-residual learning for interpretable and label-efficient diving action quality assessment',
-    authors: 'M. A. A. Yad',
+    authors: 'M. A. A. Yad and N. T. Nabila',
     venue: '2nd International Student Research Conference (ISRC 2026), Dhaka University Research Society, Dec 2026',
     note: 'Abstract accepted for oral presentation.',
     links: { code: 'https://github.com/donti507/physics-residual-aqa' },
