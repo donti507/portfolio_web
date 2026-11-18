@@ -1,5 +1,6 @@
+import { youtubeTracks } from '../data/youtube-music';
 import { useEffect, useRef, useState } from 'react';
-import { Music2, Pause, Play, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
+import { ExternalLink, Music2, Pause, Play, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
 import { asset, hasAsset } from '../data/assets';
 import manifest from '../data/music.json';
 
@@ -139,7 +140,8 @@ export default function MusicPlayer() {
     else select(current.current, true);
   }
 
-  if (!track || !available) return null;
+  const canPlay = Boolean(track && available);
+  if (!canPlay && !youtubeTracks.length) return null;
   return <div ref={root} className="relative" onKeyDown={event => {
     if (event.key === 'Escape' && open) {
       event.stopPropagation();
@@ -147,7 +149,7 @@ export default function MusicPlayer() {
       trigger.current?.focus();
     } else if (event.key === ' ' && event.target === event.currentTarget.querySelector('[data-player-panel]')) {
       event.preventDefault();
-      toggle();
+      if (canPlay) toggle();
     }
   }}>
     <audio ref={audio} preload="none"
@@ -170,6 +172,7 @@ export default function MusicPlayer() {
     <p aria-live="polite" className="sr-only">{playing ? `Now playing: ${track.title} by ${track.artist}` : ''}</p>
     {open && <section id="music-player-panel" data-player-panel tabIndex={0} aria-label="Playback controls"
       className="absolute top-full right-[-2.25rem] z-30 mt-2 w-[min(20rem,calc(100vw-2rem))] space-y-3 rounded-lg border border-line bg-card p-4 text-ink shadow-lg sm:right-0">
+      {canPlay ? <>
       <div><p className="break-words font-heading text-xl">{track.title}</p><p className="text-sm text-muted">{track.artist}</p></div>
       <div className="flex items-center justify-center gap-2">
         <button type="button" className={control} aria-label="Previous track" disabled={available < 2} onClick={() => move(-1)}><SkipBack size={18} /></button>
@@ -201,6 +204,20 @@ export default function MusicPlayer() {
             ? item.source : <a href={item.source} className="underline">Source</a>}
         </li>)}</ul>
       </details>
+      </> : <div className="space-y-1">
+        <h2 className="font-heading text-xl">Music</h2>
+        <p className="text-sm text-muted">These tracks are available on YouTube.</p>
+      </div>}
+      {youtubeTracks.length > 0 && <ul aria-label="YouTube tracks" className="space-y-1 border-t border-line pt-2">
+        {youtubeTracks.map(item => <li key={item.id}>
+          <a href={`https://www.youtube.com/watch?v=${item.id}`} target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-between gap-2 rounded px-1 py-1.5 text-sm hover:bg-tint">
+            <span>{item.title}<span className="block text-xs text-muted">{item.artist}</span></span>
+            <ExternalLink size={15} className="shrink-0" aria-hidden="true" />
+            <span className="sr-only">Open on YouTube (new tab)</span>
+          </a>
+        </li>)}
+      </ul>}
     </section>}
   </div>;
 }
