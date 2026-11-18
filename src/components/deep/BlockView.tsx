@@ -1,6 +1,6 @@
 import type { Block } from '../../data/deep';
 import type { ProjectDetail } from '../../data/projects';
-import { AnnotatedGauge, BarCompare, DotScale, HeatmapGrid, RangeBars, XYPlot } from './Charts';
+import { AnnotatedGauge, BarCompare, DotScale, HeatmapGrid, ContainmentGrid, RewardWhiskers, RangeBars, XYPlot } from './Charts';
 import { BenchmarkTable, BeforeAfterCode, BrowserShowcase, ChatMock, EquationCard, Funnel, FeatureTiles, InsightCards, LimitsList, PipelineDiagram, ScoreTable, StatusGrid, StepCards, TerminalBlock, TimelineBand } from './Panels';
 import { Figure, Tags, label } from '../ui';
 
@@ -8,6 +8,8 @@ export function BlockView({ block, project }: {block: Block; project: ProjectDet
   switch (block.kind) {
     case 'table': return <BenchmarkTable {...block} />;
     case 'heatmap': return <HeatmapGrid {...block} />;
+    case 'containment': return <ContainmentGrid {...block} />;
+    case 'whiskers': return <RewardWhiskers {...block} />;
     case 'gauge': return <AnnotatedGauge {...block} />;
     case 'scatter':
     case 'line': return <XYPlot {...block} />;

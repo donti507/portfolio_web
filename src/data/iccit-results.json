@@ -1,0 +1,279 @@
+{
+  "profiles": [
+    "Aggressive",
+    "Stealthy",
+    "Opportunistic",
+    "Cloud pivot (unseen)"
+  ],
+  "baseline": [
+    {
+      "label": "topo_1",
+      "cells": [
+        {
+          "reward": -153.0,
+          "containment": 0
+        },
+        {
+          "reward": -113.0,
+          "containment": 0
+        },
+        {
+          "reward": -137.2,
+          "containment": 0
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_2",
+      "cells": [
+        {
+          "reward": 218.0,
+          "containment": 100
+        },
+        {
+          "reward": 218.0,
+          "containment": 100
+        },
+        {
+          "reward": 218.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_3",
+      "cells": [
+        {
+          "reward": -139.0,
+          "containment": 0
+        },
+        {
+          "reward": -119.0,
+          "containment": 0
+        },
+        {
+          "reward": -132.2,
+          "containment": 0
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_4 (unseen)",
+      "cells": [
+        {
+          "reward": -149.0,
+          "containment": 0
+        },
+        {
+          "reward": -124.0,
+          "containment": 0
+        },
+        {
+          "reward": -144.4,
+          "containment": 0
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_5 (unseen)",
+      "cells": [
+        {
+          "reward": -141.0,
+          "containment": 0
+        },
+        {
+          "reward": -126.0,
+          "containment": 0
+        },
+        {
+          "reward": -140.0,
+          "containment": 0
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    }
+  ],
+  "randomised": [
+    {
+      "label": "topo_1",
+      "cells": [
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_2",
+      "cells": [
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_3",
+      "cells": [
+        {
+          "reward": 248.0,
+          "containment": 100
+        },
+        {
+          "reward": 248.0,
+          "containment": 100
+        },
+        {
+          "reward": 248.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_4 (unseen)",
+      "cells": [
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": 238.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    },
+    {
+      "label": "topo_5 (unseen)",
+      "cells": [
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": 259.0,
+          "containment": 100
+        },
+        {
+          "reward": -107.0,
+          "containment": 0
+        }
+      ]
+    }
+  ],
+  "multiseed": [
+    {
+      "label": "topo_1",
+      "baseline": {
+        "mean": -142.7,
+        "std": 14.6
+      },
+      "randomised": {
+        "mean": 264.7,
+        "std": 9.4
+      }
+    },
+    {
+      "label": "topo_2",
+      "baseline": {
+        "mean": -134.7,
+        "std": 9.4
+      },
+      "randomised": {
+        "mean": 259.0,
+        "std": 0.0
+      }
+    },
+    {
+      "label": "topo_3",
+      "baseline": {
+        "mean": -27.0,
+        "std": 172.7
+      },
+      "randomised": {
+        "mean": 261.3,
+        "std": 9.4
+      }
+    },
+    {
+      "label": "topo_4 (unseen)",
+      "baseline": {
+        "mean": -152.0,
+        "std": 12.8
+      },
+      "randomised": {
+        "mean": 238.0,
+        "std": 16.3
+      }
+    },
+    {
+      "label": "topo_5 (unseen)",
+      "baseline": {
+        "mean": -39.3,
+        "std": 166.2
+      },
+      "randomised": {
+        "mean": 259.0,
+        "std": 0.0
+      }
+    }
+  ]
+}

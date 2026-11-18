@@ -1,3 +1,5 @@
+import iccitResults from './iccit-results.json';
+
 export type Tone = 'primary' | 'coral' | 'teal' | 'neutral';
 export type IconName = 'target' | 'activity' | 'layers' | 'cpu' | 'shield' | 'clock' | 'spark' | 'files';
 export type Metric = {label: string; value: string; caption: string; chip?: string; tone: Tone; icon: IconName};
@@ -9,6 +11,8 @@ export type Marker = {label: string; value: number; tone: Tone};
 export type SectionKey = 'question' | 'why' | 'approach' | 'findings' | 'limits' | 'reproduce' | 'next';
 
 export type Block =
+  | {kind: 'containment'; title: string; profiles: string[]; rows: typeof iccitResults.baseline}
+  | {kind: 'whiskers'; title: string; rows: typeof iccitResults.multiseed}
   | {kind: 'table'; title: string; headers: string[]; rows: Row[]; caption?: string}
   | {kind: 'heatmap'; title: string; headers: number[]; rows: {label: string; values: number[]}[]; highlight: number; caption: string}
   | {kind: 'notes' | 'features' | 'limits' | 'steps'; title?: string; items: Step[]}
@@ -37,7 +41,7 @@ export type DeepProject = {
   artifact?: {title: string; eyebrow: string; blocks: Block[]; split?: boolean};
   sections: DeepSection[];
   provenance?: string;
-  dossier?: {venue?: string; equipment?: string; datasets?: string[]; stack?: string[]};
+  dossier?: {venue?: string; validation?: string; equipment?: string; datasets?: string[]; stack?: string[]};
 };
 
 export const deepProjects: Partial<Record<string, DeepProject>> = {};
@@ -513,4 +517,42 @@ deepProjects['adni-brain-age'] = {
   ],
   provenance: 'The decision log fixes the analysis rules before any count. No raw CSV was opened for the provenance attestation.',
   dossier: {datasets: ['ADNI']},
+};
+
+
+deepProjects['cyber-defense-generalization'] = {
+  metrics: [
+    {label: 'Seen attacker profiles', value: '100%', caption: 'Domain-randomised containment, including on unseen networks.', tone: 'teal', icon: 'shield'},
+    {label: 'Unseen cloud pivot', value: '0%', caption: 'Containment for both defenders.', tone: 'coral', icon: 'target'},
+    {label: 'Baseline variability', value: '172.7', caption: 'Reward standard deviation across seeds on topo_3.', tone: 'primary', icon: 'activity'},
+    {label: 'Evaluation', value: '3 seeds', caption: '20 deterministic episodes per test cell.', tone: 'neutral', icon: 'files'},
+  ],
+  artifact: {title: 'Containment across networks and attacker profiles', eyebrow: 'Single-seed evaluation', split: true, blocks: [
+    {kind: 'containment', title: 'Fixed-scenario baseline', profiles: iccitResults.profiles, rows: iccitResults.baseline},
+    {kind: 'containment', title: 'Domain-randomised (ours)', profiles: iccitResults.profiles, rows: iccitResults.randomised},
+  ]},
+  sections: [
+    {id: 'question', title: 'The question', base: ['question'], blocks: []},
+    {id: 'why', title: 'Why it matters', base: ['why'], blocks: []},
+    {id: 'approach', title: 'What I did', blocks: [{kind: 'steps', items: [
+      {title: 'Two cooperating defenders', tools: ['Independent PPO', 'Stable-Baselines3'], body: 'A Detector flags nodes and a Responder re-images them, trained in Microsoft’s CyberBattleSim against a scripted attacker in 50-step episodes.'},
+      {title: 'Domain randomisation', tools: ['Procedural topologies'], body: 'Each training episode samples a random tree network of 7–10 nodes and one of three attacker styles: aggressive, stealthy or opportunistic.'},
+      {title: 'Matched baseline', body: 'The same defenders trained on one fixed, hand-built 7-node network.'},
+      {title: 'Held-out tests', body: 'Two topologies (topo_4 and topo_5) and one attack mechanism (cloud pivot) were held out. Evaluation used 3 training seeds and 20 deterministic episodes per test cell.'},
+    ]}, {kind: 'figure', index: 0}]},
+    {id: 'findings', title: 'What I found', base: ['findings'], blocks: [
+      {kind: 'whiskers', title: 'Across 3 seeds (aggressive attacker)', rows: iccitResults.multiseed},
+      {kind: 'figure', index: 1},
+    ]},
+    {id: 'limits', title: 'Limits', blocks: [{kind: 'limits', items: [
+      {title: 'Network scale', body: 'Small simulated networks of 7–10 nodes.'},
+      {title: 'Attacker model', body: 'A scripted attacker with no adaptive behaviour.'},
+      {title: 'Attack coverage', body: 'One held-out attack mechanism.'},
+      {title: 'Replication', body: 'Three training seeds.'},
+    ]}]},
+    {id: 'reproduce', title: 'Reproduce it', base: ['reproduce'], blocks: []},
+    {id: 'next', title: 'What’s next', base: ['next'], blocks: []},
+  ],
+  provenance: 'Paper Table II supplies the single-seed matrix. Paper Table III reports the three-seed reward means and standard deviations.',
+  dossier: {venue: 'IEEE ICCIT 2026', validation: '9 automated tests'},
 };

@@ -100,7 +100,7 @@ export function ProvenanceCard({ text, title = "Data provenance" }: {text: strin
 export function Dossier({ project, spec }: {project: ProjectDetail; spec?: DeepProject['dossier']}) {
   const details = [
     ['Dates', project.dates], ['Role', project.role], ['Collaborators', project.collaborators],
-    ['Venue', spec?.venue], ['Equipment', spec?.equipment],
+    ['Venue', spec?.venue], ['Equipment', spec?.equipment], ['Validation', spec?.validation],
   ];
   return <aside className={panel + ' space-y-4 p-4'}>
     <p className={label}>Research dossier</p><h2 className="text-xl">Project specs</h2>
