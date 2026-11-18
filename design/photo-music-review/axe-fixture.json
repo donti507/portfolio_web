@@ -1,0 +1,101 @@
+{
+  "axeVersion": "4.14.1",
+  "checks": [
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "gallery",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "lightbox",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "music",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "populated-about",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "gallery",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "lightbox",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "music",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "populated-about",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "gallery",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "lightbox",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "music",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "populated-about",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "gallery",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "lightbox",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "music",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "populated-about",
+      "violations": []
+    }
+  ]
+}

@@ -26,7 +26,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-      - run: npm run build
+      - run: node scripts/build-photos.mjs
+      - run: npm --ignore-scripts run build
       - run: node scripts/check-content.mjs
       - name: Serve the production build
         run: |

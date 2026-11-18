@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button, Figure, FilterChips, SectionHeading, Timeline, label, panel } from '../components/ui';
+import { Button, FilterChips, SectionHeading, Timeline, label, panel } from '../components/ui';
 import { publishedExperience } from '../data/catalog';
 import { certifications } from '../data/site';
-import { photos } from './Photography';
+import { photos } from '../data/photos';
+import { PhotoImage } from '../components/PhotoImage';
 
 export function Experience() {
   return <Timeline>{publishedExperience.map(entry => <li key={entry.role} className="space-y-1">
@@ -39,9 +40,9 @@ export default function About() {
       </div>
       {matches.length > 6 && <Button onClick={() => setExpanded(value => !value)}>{expanded ? 'Show fewer' : `Show all ${matches.length}`}</Button>}
     </section>
-    {!!photos.length && <section><SectionHeading>Photography</SectionHeading>
+    {photos.length >= 3 && <section><SectionHeading>Photography</SectionHeading>
       <div className="mb-4 grid grid-cols-3 items-start gap-3">{photos.slice(0, 3).map(photo =>
-        <Figure key={photo.src} figure={photo} interactive={false} />)}</div>
+        <PhotoImage key={photo.src800} photo={photo} sizes="33vw" className="rounded-lg border border-line" />)}</div>
       <Button to="/photography">See more photos →</Button>
     </section>}
   </div>;
