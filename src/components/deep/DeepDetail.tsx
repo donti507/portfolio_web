@@ -3,12 +3,15 @@ import type { DeepProject, SectionKey } from '../../data/deep';
 import type { ProjectDetail } from '../../data/projects';
 import { Button, StatusPill, Tags, TOC, label, panel } from '../ui';
 import { BlockView } from './BlockView';
-import { Dossier, MetricCard, PanelHeader, ProvenanceCard, TerminalBlock } from './Panels';
+import { Dossier, MetricCard, PanelHeader, ProvenanceCard, StepCards, TerminalBlock } from './Panels';
 
 function OriginalContent({ project, field }: {project: ProjectDetail; field: SectionKey}) {
   const value = project[field];
   if (!value) return null;
   if (field === 'reproduce' && typeof value === 'string') return <TerminalBlock file="Terminal" code={value} />;
+  if (field === 'findings' && Array.isArray(value) && value.length > 1) {
+    return <StepCards items={value.map((body, index) => ({title: 'Finding ' + (index + 1), body}))} />;
+  }
   if (Array.isArray(value)) return <ul className="list-disc space-y-2 pl-5">{value.map(item => <li key={item}>{item}</li>)}</ul>;
   return <p>{value}</p>;
 }
