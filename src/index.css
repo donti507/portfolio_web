@@ -6,6 +6,7 @@
 @source "./components/Shell.tsx";
 @source "./components/PhotoImage.tsx";
 @source "./components/MusicPlayer.tsx";
+@source "./components/YouTubeMusic.tsx";
 
 @theme {
   --color-surface: #FAF8F4;
