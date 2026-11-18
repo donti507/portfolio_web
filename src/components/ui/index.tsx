@@ -93,7 +93,7 @@ export function ProjectCard({ project, variant = 'compact', placement }: {
     (placement === 'lead' ? ' lg:row-span-2' : '')}>
     {!placement && artwork}
     <div><StatusPill>{project.status} · {project.dates}</StatusPill></div>
-    <div className={placement === 'support' && figure && hasAsset(figure.src) ? 'grid grid-cols-[5rem_minmax(0,1fr)] items-start gap-3' : ''}>
+    <div className={placement === 'support' && figure && hasAsset(figure.src) ? 'grid grid-cols-[minmax(0,7rem)_minmax(0,1fr)] items-start gap-3 [&_figure]:border-0 [&_figure]:p-0 [&_img]:aspect-square [&_img]:object-cover [&_img]:object-center' : ''}>
       {placement === 'support' && artwork}
       <div className="space-y-2">
         <h3><Link className="text-ink after:absolute after:inset-0 after:rounded-lg focus-visible:after:outline-2 focus-visible:after:outline-primary"

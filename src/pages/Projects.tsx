@@ -8,8 +8,11 @@ const tiers = [
   { value: '', label: 'All' }, { value: 'research', label: 'Research' },
   { value: 'software', label: 'Software' }, { value: 'engineering', label: 'Engineering' },
 ];
+const primaryTopics = ['NeuroAI', 'Connectomics', 'HPC', 'LLMs', 'Computer Vision', 'Neuroimaging', 'Finance', 'Web'];
 const topics = [...new Set(publishedProjects.flatMap(project => project.tags))]
   .sort().map(tag => ({ value: tag, label: tag }));
+
+const moreTopics = topics.filter(topic => !primaryTopics.includes(topic.value));
 
 export default function Projects() {
   const [params, setParams] = useSearchParams();
@@ -35,10 +38,15 @@ export default function Projects() {
         <FilterChips name="Project tier" options={tiers} value={tier} onChange={value => update('tier', value)} />
         <p className={label} role="status">{filtered.length} {filtered.length === 1 ? 'project' : 'projects'}</p>
       </div>
-      <FilterChips name="Project topic" options={[{ value: '', label: 'All topics' }, ...topics]} value={tag}
+      <FilterChips name="Project topic" options={[{ value: '', label: 'All topics' }, ...primaryTopics.map(value => ({value, label: value}))]} value={tag}
         onChange={value => update('tag', value === tag ? '' : value)} />
+      <details className="space-y-2" open={moreTopics.some(topic => topic.value === tag) || undefined}>
+        <summary className="w-fit cursor-pointer text-sm font-semibold text-primary">More topics</summary>
+        <FilterChips name="More project topics" options={moreTopics} value={tag}
+          onChange={value => update('tag', value === tag ? '' : value)} />
+      </details>
     </div>
-    {!!featured.length && <section aria-labelledby="featured-projects" className={featured.length === 3 ? 'grid gap-4 lg:grid-cols-[1.4fr_1fr]' : 'grid gap-4 md:grid-cols-2'}>
+    {!!featured.length && <section aria-labelledby="featured-projects" className={featured.length === 3 ? 'grid items-start gap-4 lg:grid-cols-[1.4fr_1fr]' : 'grid items-start gap-4 md:grid-cols-2'}>
       <h2 id="featured-projects" className="sr-only">Featured projects</h2>
       {featured.map((project, index) => <ProjectCard key={project.slug} project={project} variant="featured"
         placement={featured.length === 3 ? (index === 0 ? 'lead' : 'support') : undefined} />)}
