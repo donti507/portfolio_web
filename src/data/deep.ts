@@ -3,7 +3,7 @@ export type IconName = 'target' | 'activity' | 'layers' | 'cpu' | 'shield' | 'cl
 export type Metric = {label: string; value: string; caption: string; chip?: string; tone: Tone; icon: IconName};
 export type Note = {title: string; body: string; tone?: Tone};
 export type Step = Note & {tools?: string[]};
-export type Row = {cells: (string | number)[]; tone?: 'best' | 'reference' | 'bound'};
+export type Row = {cells: (string | number)[]; tone?: 'best' | 'reference' | 'bound'; badge?: Tone};
 export type Point = {label: string; x: number; y: number; note?: string; tone?: Tone};
 export type Marker = {label: string; value: number; tone: Tone};
 export type SectionKey = 'question' | 'why' | 'approach' | 'findings' | 'limits' | 'reproduce' | 'next';
@@ -21,6 +21,7 @@ export type Block =
   | {kind: 'scatter' | 'line'; title: string; xLabel: string; yLabel: string; xTicks: number[]; yTicks: number[]; points: Point[]; caption?: string; zone?: {maxX: number; minY: number}}
   | {kind: 'dots'; title: string; unit: string; ticks: number[]; band: [number, number]; groups: {label: string; values: Marker[]}[]; references: Marker[]}
   | {kind: 'bars'; title: string; unit: string; max: number; rows: {label: string; before: number; after: number; rescued: number}[]; caption: string}
+  | {kind: 'ranges'; title: string; max: number; rows: {label: string; low: number; high: number; note?: string}[]; caption: string}
   | {kind: 'status'; title: string; note: string; complete: number; failed: number; caption: string}
   | {kind: 'funnel'; title: string; stages: {value: string; label: string; note?: string}[]}
   | {kind: 'scores'; title: string; items: {id: string; title: string; detail: string; status: 'Supported' | 'Not supported' | 'Descriptive'}[]}
@@ -92,9 +93,12 @@ deepProjects['physics-residual-aqa'] = {
         {title: 'Median floor', body: 'The median barely moved (9.87 → 9.48 px).'},
         {title: 'Verification gap', body: 'The best median is about 3.2× the ≈3 px requirement.', tone: 'coral'},
       ]},
-      {kind: 'table', title: 'Human consistency by joint', headers: ['Measure', 'Observed'],
-        rows: [{cells: ['Overall', '7.8 px']}, {cells: ['Excluding probable left/right swaps', '6.5 px']},
-          {cells: ['Hips', '20–22 px (worst)']}, {cells: ['Shoulders, elbows, wrists and ankles', '7–10 px']}, {cells: ['Head', 'About 5 px']}, {cells: ['Visibility agreement', '99%']}]},
+      {kind: 'ranges', title: 'Human consistency by joint', max: 22, rows: [
+        {label: 'Overall', low: 7.8, high: 7.8}, {label: 'Excluding probable left/right swaps', low: 6.5, high: 6.5},
+        {label: 'Hips', low: 20, high: 22, note: 'Worst agreement'},
+        {label: 'Shoulders, elbows, wrists and ankles', low: 7, high: 10},
+        {label: 'Head', low: 5, high: 5, note: 'Approximate'},
+      ], caption: 'Visibility decisions agreed 99%.'},
       {kind: 'figure', index: 0}, {kind: 'figure', index: 1},
     ]},
     {id: 'limits', title: 'What this does not show', blocks: [{kind: 'limits', items: [

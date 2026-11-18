@@ -1,0 +1,2 @@
+Content guard passed: 49 built files scanned, 74 prohibited strings checked.
+deep-guard-fixture.txt: World Aquatics

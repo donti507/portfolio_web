@@ -29,7 +29,7 @@ export function DeepDetail({ project, content, previous, next }: {project: Proje
       <div className="flex flex-wrap items-center gap-2">
         <StatusPill>{project.status} · {project.dates}</StatusPill>
         <Tags values={project.tags} />
-        {content.badges?.map(badge => <span className="rounded bg-coral-fill/15 px-2 py-1 font-mono text-xs text-coral" key={badge}>{badge}</span>)}
+        {content.badges?.map(badge => <span className="rounded border border-coral/40 bg-card px-2 py-1 font-mono text-xs text-coral" key={badge}>{badge}</span>)}
       </div>
       <h1 className="max-w-5xl">{project.title}</h1>
       <p className="max-w-4xl text-lg text-muted">{project.oneLiner}</p>
@@ -39,7 +39,7 @@ export function DeepDetail({ project, content, previous, next }: {project: Proje
       </Button>)}</div>
     </header>
     {!!content.metrics.length && <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">{content.metrics.map(metric => <MetricCard key={metric.label} metric={metric} />)}</dl>}
-    {content.artifact && <section className={panel + ' space-y-4 p-3 sm:p-5'}>
+    {content.artifact && <section className={panel + ' space-y-4 p-3 [content-visibility:auto] [contain-intrinsic-size:auto_400px] sm:p-5'}>
       <PanelHeader eyebrow={content.artifact.eyebrow} title={content.artifact.title} />
       <div className={`grid items-start gap-3 ${content.artifact.split ? 'md:grid-cols-2' : ''}`}>{content.artifact.blocks.map((block, index) =>
         <BlockView block={block} project={project} key={index} />)}</div>
@@ -53,7 +53,7 @@ export function DeepDetail({ project, content, previous, next }: {project: Proje
         <Dossier project={project} spec={content.dossier} />
       </div>
       <div className="min-w-0 space-y-8 lg:col-start-2 lg:row-start-1">
-        {sections.map(section => <section id={section.id} tabIndex={-1} key={section.id} className="scroll-mt-28 space-y-4 border-t border-line pt-5">
+        {sections.map(section => <section id={section.id} tabIndex={-1} key={section.id} className="scroll-mt-28 space-y-4 border-t border-line pt-5 [content-visibility:auto] [contain-intrinsic-size:auto_260px]">
           <div><p className={label + ' mb-1'}>Section {section.number}</p><h2>{section.title}</h2></div>
           {section.base?.map(field => <OriginalContent field={field} project={project} key={field} />)}
           {section.blocks.map((block, index) => <BlockView block={block} project={project} key={index} />)}

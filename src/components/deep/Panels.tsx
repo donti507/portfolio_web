@@ -35,7 +35,7 @@ export function BenchmarkTable({ title, headers, rows, caption }: Extract<Block,
         <thead className="border-y border-line bg-tint text-muted"><tr>{headers.map(header => <th scope="col" className="px-3 py-2" key={header}>{header}</th>)}</tr></thead>
         <tbody>{rows.map(row => <tr key={row.cells[0]} className={'border-b border-line last:border-0 ' + (row.tone ? tones[row.tone] : '')}>
           <th scope="row" className="min-w-24 px-3 py-2 font-semibold">{row.cells[0]}</th>
-          {row.cells.slice(1).map((cell, index) => <td key={index} className="px-3 py-2 tabular-nums">{cell}</td>)}
+          {row.cells.slice(1).map((cell, index) => <td key={index} className="px-3 py-2 tabular-nums">{row.badge && index === headers.length - 2 ? <span className={`inline-block rounded-full border border-line bg-card px-2 py-1 text-xs ${accents[row.badge]}`}>{cell}</span> : cell}</td>)}
         </tr>)}</tbody>
       </table>
     </div>
@@ -57,6 +57,17 @@ export function InsightCards({ items }: {items: Note[]}) {
   return <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{items.map(item => <li key={item.title} className={panel + ' space-y-2 p-4'}>
     <p className={label + ' ' + accents[item.tone ?? 'primary']}>{item.title}</p><p className="text-sm">{item.body}</p>
   </li>)}</ul>;
+}
+
+export function FeatureTiles({ items }: { items: Note[] }) {
+  const features = [Layers, Shield, Target, Sparkles, Activity, Files];
+  return <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{items.map((item, index) => {
+    const Icon = features[index % features.length];
+    return <li key={item.title} className={panel + ' space-y-2 p-4'}>
+      <Icon size={19} className="text-primary" aria-hidden="true" />
+      <strong className="block text-sm">{item.title}</strong><p className="text-sm text-muted">{item.body}</p>
+    </li>;
+  })}</ul>;
 }
 
 export function LimitsList({ items }: {items: Note[]}) {
@@ -182,15 +193,26 @@ export function ChatMock({ title, lanes, user, action, voice }: Extract<Block, {
 export function ScoreTable({ title, items }: Extract<Block, {kind: 'scores'}>) {
   return <BenchmarkTable kind="table" title={title} headers={['Hypothesis', 'Evidence', 'Status']} rows={items.map(item => ({
     cells: [`${item.id} · ${item.title}`, item.detail, item.status], tone: item.status === 'Supported' ? 'best' : undefined,
+    badge: item.status === 'Supported' ? 'teal' : item.status === 'Not supported' ? 'coral' : 'neutral',
   }))} />;
 }
 
 export function StatusGrid({ title, note, complete, failed, caption }: Extract<Block, {kind: 'status'}>) {
   return <div className={panel + ' space-y-3 p-4'}>
     <p className={label}>{title}</p>
-    <div className="grid grid-cols-8 gap-1.5" aria-hidden="true">
-      {Array.from({length: complete + failed}, (_, index) => <span key={index} className={`grid aspect-square place-items-center rounded font-mono text-xs ${index < complete ? 'bg-teal/15 text-teal' : 'bg-coral-fill/35 text-coral'}`}>{index + 1}</span>)}
-    </div>
+    <svg role="img" aria-label={`${title}: ${complete} completed, ${failed} failed. Order illustrative.`}
+      viewBox={`0 0 320 ${Math.ceil((complete + failed) / 8) * 36}`} className="mx-auto block h-auto w-full max-w-md font-mono text-sm">
+      {Array.from({length: complete + failed}, (_, index) => {
+        const tone = index < complete ? 'var(--color-teal)' : 'var(--color-coral)';
+        return <g key={index} transform={`translate(${index % 8 * 40} ${Math.floor(index / 8) * 36})`}>
+          <rect x="2" y="2" width="35" height="31" rx="4" fill={tone} opacity=".18" />
+          <text x="20" y="23" textAnchor="middle" fill="var(--color-ink)">{index + 1}</text>
+        </g>;
+      })}
+    </svg>
+    <div className="sr-only"><table><caption>{title} · task totals</caption><thead><tr><th scope="col">Status</th><th scope="col">Tasks</th></tr></thead>
+      <tbody><tr><th scope="row">Completed</th><td>{complete}</td></tr><tr><th scope="row">Failed</th><td>{failed}</td></tr></tbody>
+    </table></div>
     <p className="text-sm"><Circle size={13} className="mr-1 inline fill-current text-teal" aria-hidden="true" />{complete} completed
       <Circle size={13} className="mr-1 ml-3 inline fill-current text-coral" aria-hidden="true" />{failed} failed</p>
     <p className="text-xs text-muted">{note}</p><p className="border-t border-line pt-2 text-xs text-muted">{caption}</p>
@@ -199,7 +221,7 @@ export function StatusGrid({ title, note, complete, failed, caption }: Extract<B
 
 export function BeforeAfterCode({ title, before, after, file }: Extract<Block, {kind: 'beforeAfter'}>) {
   return <div className="space-y-3"><p className={label}>{title}</p>
-    <div className="grid gap-3"><div className="rounded border border-line bg-limits p-3 text-sm"><strong className="text-coral">✗ Crashed</strong><p className="mt-1">{before}</p></div>
+    <div className="grid gap-3"><div className="rounded border border-line bg-card p-3 text-sm"><strong className="text-coral">✗ Crashed</strong><p className="mt-1">{before}</p></div>
       <div className="min-w-0 space-y-2"><strong className="text-teal">✓ Fixed</strong><TerminalBlock file={file} code={after} /></div>
     </div>
   </div>;

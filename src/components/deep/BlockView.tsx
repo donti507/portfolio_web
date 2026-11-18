@@ -1,7 +1,7 @@
 import type { Block } from '../../data/deep';
 import type { ProjectDetail } from '../../data/projects';
-import { AnnotatedGauge, BarCompare, DotScale, HeatmapGrid, XYPlot } from './Charts';
-import { BenchmarkTable, BeforeAfterCode, BrowserShowcase, ChatMock, EquationCard, Funnel, InsightCards, LimitsList, PipelineDiagram, ScoreTable, StatusGrid, StepCards, TerminalBlock, TimelineBand } from './Panels';
+import { AnnotatedGauge, BarCompare, DotScale, HeatmapGrid, RangeBars, XYPlot } from './Charts';
+import { BenchmarkTable, BeforeAfterCode, BrowserShowcase, ChatMock, EquationCard, Funnel, FeatureTiles, InsightCards, LimitsList, PipelineDiagram, ScoreTable, StatusGrid, StepCards, TerminalBlock, TimelineBand } from './Panels';
 import { Figure, Tags, label } from '../ui';
 
 export function BlockView({ block, project }: {block: Block; project: ProjectDetail}) {
@@ -12,6 +12,7 @@ export function BlockView({ block, project }: {block: Block; project: ProjectDet
     case 'scatter':
     case 'line': return <XYPlot {...block} />;
     case 'dots': return <DotScale {...block} />;
+    case 'ranges': return <RangeBars {...block} />;
     case 'bars': return <BarCompare {...block} />;
     case 'status': return <StatusGrid {...block} />;
     case 'funnel': return <Funnel {...block} />;
@@ -34,7 +35,7 @@ export function BlockView({ block, project }: {block: Block; project: ProjectDet
     case 'features': return <div className="space-y-2">
       {block.title && <h3 className="text-xl">{block.title}</h3>}
       {block.kind === 'steps' ? <StepCards items={block.items} /> : block.kind === 'limits' ?
-        <LimitsList items={block.items} /> : <InsightCards items={block.items} />}
+        <LimitsList items={block.items} /> : block.kind === 'features' ? <FeatureTiles items={block.items} /> : <InsightCards items={block.items} />}
     </div>;
     case 'tags':
     case 'list': return <div className="space-y-2">

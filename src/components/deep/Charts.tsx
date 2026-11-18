@@ -15,17 +15,17 @@ function Chart({ title, headers, rows, children, caption }: {
   return <figure className={panel + ' min-w-0 space-y-3 p-3 sm:p-4'}>
     <figcaption className="font-heading text-xl">{title}</figcaption>
     {children}
-    <table className="sr-only">
+    <div className="sr-only"><table>
       <caption>{title} · chart data</caption><thead><tr>{headers.map(header => <th key={header} scope="col">{header}</th>)}</tr></thead>
       <tbody>{rows.map((row, index) => <tr key={index}><th scope="row">{row[0]}</th>
         {row.slice(1).map((value, column) => <td key={column}>{value}</td>)}</tr>)}</tbody>
-    </table>
+    </table></div>
     {caption && <p className="text-xs text-muted">{caption}</p>}
   </figure>;
 }
 
-function Graphic({ title, height, children }: {title: string; height: number; children: ReactNode}) {
-  return <svg role="img" aria-label={title} viewBox={`0 0 420 ${height}`} className="block h-auto w-full font-mono" fontSize="14">{children}</svg>;
+function Graphic({ title, height, children, compact }: {title: string; height: number; children: ReactNode; compact?: boolean}) {
+  return <svg role="img" aria-label={title} viewBox={`0 0 420 ${height}`} className={'block h-auto w-full font-mono ' + (compact ? 'mx-auto max-w-3xl' : '')} fontSize="14">{children}</svg>;
 }
 
 export function XYPlot({ kind, title, xLabel, yLabel, xTicks, yTicks, points, caption, zone }: Extract<Block, {kind: 'scatter' | 'line'}>) {
@@ -42,7 +42,7 @@ export function XYPlot({ kind, title, xLabel, yLabel, xTicks, yTicks, points, ca
       {kind === 'line' && <polyline points={plotted.map(p => `${p.px},${p.py}`).join(' ')} fill="none" stroke={colors.primary} strokeWidth="2.5" />}
       {plotted.map(point => <g key={point.label}>
         <circle cx={point.px} cy={point.py} r="5.5" fill={colors[point.tone ?? 'primary']} />
-        <text x={point.px + (point.px > 315 ? -8 : 8)} y={Math.max(23, point.py - 9)} textAnchor={point.px > 315 ? 'end' : 'start'} fill={text}>
+        <text x={point.px + (point.px > 315 ? -8 : 8)} y={Math.max(23, point.py - (point.tone === 'coral' ? 16 : 9))} textAnchor={point.px > 315 ? 'end' : 'start'} fill={text}>
           {kind === 'line' ? `${point.y}% · ${point.note}` : point.label}
         </text>
       </g>)}
@@ -60,7 +60,7 @@ export function PhaseCards({ phases, models }: Pick<Extract<Block, {kind: 'gauge
       </select></label>
     <Chart title={models[selected] + ' · error by phase'} headers={['Phase', 'Median (px)', 'Joint errors']}
       rows={phases.map(phase => [phase.label, phase.values[selected].toFixed(2), phase.n])}>
-      <ul className="grid grid-cols-2 gap-2 sm:grid-cols-5" aria-hidden="true">{phases.map((phase, index) => {
+      <ul className="grid grid-cols-2 gap-2 sm:grid-cols-5">{phases.map((phase, index) => {
         const value = phase.values[selected];
         const tone = index >= phases.length - 2 ? 'coral' : 'teal';
         return <li key={phase.label} className="space-y-1 rounded bg-tint p-2">
@@ -81,7 +81,7 @@ export function AnnotatedGauge({ title, max, zone, markers, reference, gapTo, ph
   return <div className="space-y-4">
     <Chart title={title} headers={['Landmark', 'Error (px)']}
       rows={[[reference.label, reference.value], ['Synthetic requirement', zone], ['Gap to best model', gapTo - zone], ...markers.map(marker => [marker.label, marker.value])]}>
-      <Graphic title={`${title}. Synthetic requirement, human reference, and model errors in pixels.`} height={182}>
+      <Graphic title={`${title}. Synthetic requirement, human reference, and model errors in pixels.`} height={182} compact>
         <rect x={24} y="24" width={x(zone) - 24} height="114" rx="3" fill={colors.teal} opacity=".15" />
         <path d={`M${x(reference.value)} 22V144`} stroke={colors.neutral} strokeDasharray="4 4" />
         <text x={x(reference.value) + 4} y="19" fill={muted}>Human {reference.value}</text>
@@ -130,7 +130,10 @@ export function DotScale({ title, ticks, band, unit, groups, references }: Extra
 export function BarCompare({ title, unit, max, rows, caption }: Extract<Block, {kind: 'bars'}>) {
   return <Chart title={title} headers={['Source', 'Zero-shot ' + unit, 'After refit ' + unit, 'Rescued (%)']}
     rows={rows.map(row => [row.label, row.before, row.after, row.rescued])} caption={caption}>
-    <p aria-hidden="true" className={label}><span className="text-coral">Zero-shot</span> / <span className="text-teal">After refit</span></p>
+    <p aria-hidden="true" className={label + ' flex flex-wrap gap-3'}>
+      <span className="inline-flex items-center gap-1"><span className="size-2 rounded-sm bg-coral" />Zero-shot</span>
+      <span className="inline-flex items-center gap-1"><span className="size-2 rounded-sm bg-teal" />After refit</span>
+    </p>
     <Graphic title={`${title}. Paired before and after values with rescued percentages.`} height={rows.length * 80}>
       {rows.map((row, index) => <g key={row.label} transform={`translate(0 ${index * 80})`}>
         <text x="10" y="16" fill={text}>{row.label}</text>
@@ -156,6 +159,25 @@ export function HeatmapGrid({ title, headers, rows, highlight, caption }: Extrac
           <text x="28" y="20" textAnchor="middle" fill={text}>{value}%</text>
         </g>)}
       </g>)}
+    </Graphic>
+  </Chart>;
+}
+
+export function RangeBars({ title, max, rows, caption }: Extract<Block, {kind: 'ranges'}>) {
+  return <Chart title={title} headers={['Joint or subset', 'Lower (px)', 'Upper (px)', 'Notes']}
+    rows={rows.map(row => [row.label, row.low, row.high, row.note ?? ''])} caption={caption}>
+    <Graphic title={`${title}. Observed agreement in pixels, with ranges where supplied.`} height={rows.length * 58}>
+      {rows.map((row, index) => {
+        const x = (value: number) => 10 + 309 * value / max;
+        const isRange = row.low !== row.high;
+        return <g key={row.label} transform={`translate(0 ${index * 58})`}>
+          <text x="10" y="16" fill={text}>{row.label}</text>
+          <rect x="10" y="25" width="309" height="9" rx="4" fill={rule} />
+          <rect x="10" y="25" width={x(row.low) - 10} height="9" rx="4" fill={colors.teal} />
+          {isRange && <rect x={x(row.low)} y="25" width={x(row.high) - x(row.low)} height="9" fill={colors.coral} />}
+          <text x="410" y="34" textAnchor="end" fill={text}>{isRange ? row.low + '–' + row.high : row.low} px</text>
+        </g>;
+      })}
     </Graphic>
   </Chart>;
 }
