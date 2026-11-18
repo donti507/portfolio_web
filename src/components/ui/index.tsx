@@ -11,7 +11,7 @@ export function Button({ children, href, to, variant = 'secondary', onClick }: {
   children: ReactNode; href?: string; to?: string; variant?: 'primary' | 'secondary' | 'ghost'; onClick?: () => void;
 }) {
   const styles = {
-    primary: 'border-primary bg-primary text-white hover:bg-primary-hover hover:text-white',
+    primary: 'border-primary bg-primary text-on-primary hover:bg-primary-hover hover:text-on-primary',
     secondary: 'border-line bg-card text-primary hover:bg-tint',
     ghost: 'border-transparent text-primary hover:bg-tint',
   };
@@ -43,7 +43,7 @@ export function FilterChips({ options, value, onChange, name }: {
 }) {
   return <div className="flex flex-wrap gap-2" role="group" aria-label={name}>{options.map(option =>
     <button key={option.value} type="button" aria-pressed={option.value === value} onClick={() => onChange(option.value)}
-      className="min-h-9 rounded-full border border-line bg-card px-3 text-sm text-muted hover:bg-tint aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white">
+      className="min-h-9 rounded-full border border-line bg-card px-3 text-sm text-muted hover:bg-tint aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-on-primary">
       {option.label}
     </button>)}</div>;
 }
@@ -86,7 +86,8 @@ export function ProjectCard({ project, variant = 'compact', placement }: {
 }) {
   const featured = variant === 'featured';
   const figure = featured ? project.figures?.[0] : undefined;
-  const links = project.links.filter(link => link.kind === 'paper' || link.kind === 'code');
+  const linkNames = { paper: 'Paper', code: 'Code', prereg: 'Preregistration', demo: 'Demo', data: 'Data' } as const;
+  const links = project.links.slice(0, 3);
   const artwork = figure && <Figure figure={placement === 'support' ? { ...figure, caption: '' } : figure} interactive={false} />;
   return <article className={panel + ' relative flex min-w-0 flex-col gap-3 p-5 hover:border-primary/40' +
     (placement === 'lead' ? ' lg:row-span-2' : '')}>
@@ -105,7 +106,7 @@ export function ProjectCard({ project, variant = 'compact', placement }: {
     <Tags values={(featured ? project.stack : project.tags).slice(0, 4)} />
     <div className="mt-auto flex flex-wrap gap-4 border-t border-line pt-3 text-sm">{links.map(link =>
       <a className="relative z-10 inline-flex items-center gap-1" key={link.href} href={link.href}>
-        {link.kind === 'code' ? 'Code' : 'Paper'} <ArrowUpRight aria-hidden="true" size={15} />
+        {linkNames[link.kind]} <ArrowUpRight aria-hidden="true" size={15} />
       </a>)}</div>
   </article>;
 }

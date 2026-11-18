@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function () {
+        var theme = 'light';
+        try { theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch (e) {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home · Md Ali Ashraf Yad</title>
@@ -26,7 +33,8 @@
         "sameAs": [
           "https://github.com/donti507",
           "https://linkedin.com/in/md-ali-ashraf-y-28867524b",
-          "https://arxiv.org/abs/2610.29205"
+          "https://arxiv.org/abs/2610.29205",
+          "https://scholar.google.com/citations?user=qoNVckcAAAAJ"
         ]
       }
     </script>

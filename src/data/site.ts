@@ -5,16 +5,15 @@
 export const person = {
   name: 'Md Ali Ashraf Yad',
   tagline: 'CS undergraduate in Wrocław working on NeuroAI, connectomics, HPC and reliable LLMs.',
-  statusBadge: 'Open to PhD positions',
   location: 'Wrocław, Poland',
   email: 'ali.ashraf.yad01@gmail.com',
   links: {
     github: 'https://github.com/donti507',
     linkedin: 'https://linkedin.com/in/md-ali-ashraf-y-28867524b',
     arxiv: 'https://arxiv.org/abs/2610.29205',
+    scholar: 'https://scholar.google.com/citations?user=qoNVckcAAAAJ&hl=en',
     cv: 'Yad_CV_Research.pdf', // put the PDF in /public
   },
-  // Add only if real: orcid, scholar
 };
 
 export const home = {

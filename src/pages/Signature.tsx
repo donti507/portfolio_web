@@ -22,8 +22,11 @@ function MeasuredValues({ title, values, maximum, unit }: {
 
 function Hpo({ project }: { project: ProjectDetail }) {
   const methods = [
+    // Mean GPU-hours per trial and mean accuracy, from table1_summary.csv in the BudgetAware-HPO repo.
     { name: 'Random Search', hours: 0.144, accuracy: 61.3 },
+    { name: 'TPE', hours: 0.077, accuracy: 82.0 },
     { name: 'Hyperband', hours: 0.050, accuracy: 84.4 },
+    { name: 'CMA-ES', hours: 0.047, accuracy: 44.1 },
   ];
   const auditStages = [
     { value: '2,211', label: 'Result files reconciled' },
@@ -33,12 +36,23 @@ function Hpo({ project }: { project: ProjectDetail }) {
   return <div className="grid gap-4 md:grid-cols-2">
     <section className={panel + ' space-y-3 p-5'}>
       <h2>GPU-hours and accuracy</h2>
-      <svg aria-hidden="true" viewBox="0 0 300 112" className="w-full rounded bg-tint">
-        <path d="M24 16V94H276" fill="none" stroke="var(--color-muted)" />
-        {methods.map(({ name, hours, accuracy }) => <circle key={name} cx={24 + hours * 1600}
-          cy={94 - accuracy * 0.83} r="6" fill={name === 'Hyperband' ? 'var(--color-coral)' : 'var(--color-primary)'} />)}
+      <svg role="img" aria-label="Mean accuracy against mean GPU-hours per trial for four tuning methods" viewBox="0 0 320 190" className="w-full rounded bg-tint">
+        {[40, 60, 80].map(tick => <g key={tick}>
+          <line x1="40" x2="304" y1={160 - (tick - 30) * 2.4} y2={160 - (tick - 30) * 2.4} stroke="var(--color-line)" />
+          <text x="34" y={164 - (tick - 30) * 2.4} textAnchor="end" fontSize="10" fill="var(--color-muted)">{tick}%</text>
+        </g>)}
+        {[0.05, 0.1, 0.15].map(tick => <text key={tick} x={40 + tick * 1700} y="176" textAnchor="middle" fontSize="10" fill="var(--color-muted)">{tick.toFixed(2)}</text>)}
+        <path d="M40 16V160H304" fill="none" stroke="var(--color-muted)" />
+        {methods.map(({ name, hours, accuracy }) => {
+          const x = 40 + hours * 1700, y = 160 - (accuracy - 30) * 2.4, best = name === 'Hyperband';
+          return <g key={name}>
+            <circle cx={x} cy={y} r={best ? 7 : 5.5} fill={best ? 'var(--color-coral-fill)' : 'var(--color-primary)'} />
+            <text x={name === 'Random Search' ? x - 9 : x + 10} y={name === 'Hyperband' ? y - 8 : name === 'TPE' ? y + 14 : y + 4}
+              textAnchor={name === 'Random Search' ? 'end' : 'start'} fontSize="11" fill="var(--color-ink)">{name}</text>
+          </g>;
+        })}
       </svg>
-      <p className="text-sm text-muted">GPU-hours per trial (horizontal) · mean accuracy (vertical)</p>
+      <p className="text-sm text-muted">Mean GPU-hours per trial (horizontal) against mean accuracy (vertical). Lower left is cheap, higher is better.</p>
       <ul className="space-y-1 text-sm">{methods.map(method => <li key={method.name}>{method.name} · {method.hours.toFixed(3)} GPU-h · {method.accuracy}%</li>)}</ul>
     </section>
     <section className={panel + ' space-y-4 p-5'}>

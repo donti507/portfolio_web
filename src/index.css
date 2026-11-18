@@ -119,8 +119,39 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
+
+/* Light is the default. Dark keeps the same roles: warm charcoal paper, soft ink,
+   lighter blue for links, softer coral and teal so contrast stays AA or better. */
+:root { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-surface: #111418;
+  --color-background: #111418;
+  --color-surface-bright: #161A20;
+  --color-surface-container-low: #161A20;
+  --color-card: #191D24;
+  --color-line: #2B323D;
+  --color-ink: #E8EAEE;
+  --color-on-surface: #E8EAEE;
+  --color-on-background: #E8EAEE;
+  --color-muted: #A2AAB7;
+  --color-on-surface-variant: #A2AAB7;
+  --color-primary: #8FB4FF;
+  --color-primary-hover: #B5CCFF;
+  --color-on-primary: #0B1A33;
+  --color-teal: #5CD3B8;
+  --color-tertiary: #7BD7C3;
+  --color-coral: #F3A27C;
+  --color-coral-fill: #F28C5B;
+  --color-tint: #1B2433;
+  --color-limits: #221E18;
+  --color-limits-border: #6B5E49;
+  --color-code: #0B0E13;
+}
+:root[data-theme="dark"] img { background: #fff; }
+
 @layer base {
-  body { margin: 0; background: var(--color-surface); color: var(--color-ink); font: 17px/1.6 var(--font-sans); }
+  body { margin: 0; background: var(--color-surface); transition: background-color .2s, color .2s; color: var(--color-ink); font: 17px/1.6 var(--font-sans); }
   h1, h2, h3 { font-family: var(--font-heading); line-height: 1.14; }
   h1 { font-size: clamp(2rem, 4vw, 3rem); }
   h2 { font-size: clamp(1.625rem, 3vw, 2rem); }
