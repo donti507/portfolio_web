@@ -272,3 +272,75 @@ deepProjects['fly-connectome'] = {
     'Janelia FlyEM male CNS and hemibrain (neuPrint)', 'FlyWire FAFB and BANC (FlyWire Codex)', 'DANDI 000289',
   ]},
 };
+
+const connectomePages = [
+  {
+    "label": "Explore",
+    "href": "https://donti507.github.io/connectometwin/index.html",
+    "image": "projects/connectometwin/pages-explore.webp",
+    "width": 1002,
+    "height": 1200
+  },
+  {
+    "label": "Guided story",
+    "href": "https://donti507.github.io/connectometwin/story.html",
+    "image": "projects/connectometwin/pages-story.webp",
+    "width": 600,
+    "height": 750
+  },
+  {
+    "label": "Wiring differences",
+    "href": "https://donti507.github.io/connectometwin/matrix.html",
+    "image": "projects/connectometwin/pages-matrix.webp",
+    "width": 600,
+    "height": 729
+  },
+  {
+    "label": "Neuron inspector",
+    "href": "https://donti507.github.io/connectometwin/neuron.html",
+    "image": "projects/connectometwin/pages-neuron.webp",
+    "width": 600,
+    "height": 848
+  },
+  {
+    "label": "Orthogonal projection",
+    "href": "https://donti507.github.io/connectometwin/projection.html",
+    "image": "projects/connectometwin/pages-projection.webp",
+    "width": 600,
+    "height": 621
+  },
+  {
+    "label": "Compass circuit wiring",
+    "href": "https://donti507.github.io/connectometwin/circuit.html",
+    "image": "projects/connectometwin/pages-circuit.webp",
+    "width": 600,
+    "height": 600
+  }
+];
+deepProjects['connectometwin'] = {
+  metrics: [
+    {label: 'Neurons rendered', value: '433', caption: 'FlyWire compass-circuit anatomy', tone: 'primary', icon: 'layers'},
+    {label: 'Reference cases', value: '46', caption: 'Model behaviour checked against the paper', tone: 'neutral', icon: 'shield'},
+    {label: 'Headless rendering', value: '58 fps', caption: 'At 4× CPU throttling', tone: 'coral', icon: 'activity'},
+    {label: 'Build dependencies', value: '0', caption: 'Browser app with no build step', tone: 'teal', icon: 'cpu'},
+  ],
+  artifact: {title: 'Explore the compass circuit', eyebrow: 'Live application', blocks: [{
+    kind: 'browser', title: 'ConnectomeTwin', url: 'https://donti507.github.io/connectometwin/', pages: connectomePages,
+    callouts: ['Swap reconstruction', 'Refit cell-type gains', 'Heading error 8° → 85°'],
+  }]},
+  sections: [
+    {id: 'question', title: 'The question', base: ['question', 'why'], blocks: []},
+    {id: 'approach', title: 'How it’s built', blocks: [{kind: 'features', items: [
+      {title: 'Rendering', body: 'Three.js with full branches on hardware GPUs, a labelled Canvas projection when WebGL cannot start, and a 2D ring view. The overview is 2.6 MB; optional full detail is 10.2 MB.'},
+      {title: 'Correctness', body: '46 model reference cases (self-check.html), unit tests, Playwright browser tests and a GitHub Actions workflow that validates and deploys.', tone: 'teal'},
+      {title: 'Accessibility', body: 'System theme with an override; keyboard controls (Space, R, arrows, Home, [ / ]); starts paused with reduced motion; and shows error values as text alongside plots.'},
+      {title: 'Efficiency', body: 'Loads 2 wirings at startup instead of 7. A Web Worker runs 16-heading benchmarks. Shows the strongest 1,200 edges by default.'},
+    ]}]},
+    {id: 'performance', title: 'Performance', blocks: [{kind: 'table', title: 'Largest wiring · 33,783 edges · 2D ring view',
+      headers: ['Edges shown', 'fps', 'p95 frame gap'], rows: [
+        {cells: ['Default (strongest 1,200)', '58.3', '25.2 ms']}, {cells: ['All', '60.4', '21.5 ms']},
+      ], caption: 'Headless Chromium at 1366 px with 4× CPU throttling. A slower-CPU proxy rather than a physical-laptop benchmark.'}]},
+    {id: 'try', title: 'Try it', blocks: [{kind: 'terminal', file: 'Terminal', code: 'cd connectometwin/web && python -m http.server 8000'}]},
+  ],
+  dossier: {datasets: ['FlyWire compass circuit']},
+};
