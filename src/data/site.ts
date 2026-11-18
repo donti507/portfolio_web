@@ -25,12 +25,13 @@ export const home = {
   stats: [
     { value: '9', label: 'connectome versions compared' },
     { value: '1,336', label: 'trials on 40 V100 GPUs' },
-    { value: '1', label: 'arXiv preprint' },
+    { value: '1', label: 'IEEE paper · 1 preprint' },
     { value: '433', label: 'neurons rendered in the browser' },
   ],
-  featuredProjectSlugs: ['fly-connectome', 'physics-residual-aqa', 'budgetaware-hpo'],
+  featuredProjectSlugs: ['cyber-defense-generalization', 'fly-connectome', 'physics-residual-aqa', 'budgetaware-hpo'],
   // "Now" strip: what I'm doing this term
   now: [
+    'Preparing the IEEE ICCIT 2026 oral presentation.',
     'Presenting the diving physics-residual result at ISRC 2026 (Dec 2026).',
     'Annotating SEC filings for Trust but Verify.',
     'Finalising the ADNI residual brain-age preregistration.',

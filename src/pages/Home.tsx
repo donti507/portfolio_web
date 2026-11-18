@@ -34,7 +34,7 @@ export default function Home() {
     <section><SectionHeading>Research questions</SectionHeading><Interests /></section>
     <section>
       <div className="flex flex-wrap justify-between gap-2"><SectionHeading>Featured work</SectionHeading><Link to="/projects">All projects →</Link></div>
-      <div className="grid gap-4 md:grid-cols-3">{home.featuredProjectSlugs.map(projectBySlug).map(project => project &&
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{home.featuredProjectSlugs.map(projectBySlug).map(project => project &&
         <ProjectCard key={project.slug} project={project} variant="featured" />)}</div>
     </section>
     <section><SectionHeading>Latest preprint</SectionHeading><CitationCard publication={publications.find(publication => publication.kind === 'Preprint')!} /></section>

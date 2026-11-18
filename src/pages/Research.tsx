@@ -6,7 +6,7 @@ import { Interests } from './Home';
 export default function Research() {
   return <div className="mx-auto max-w-[1120px] space-y-10">
     <header className="space-y-3 border-b border-line pb-5"><p className={label}>Research</p><h1>Questions I'm working on</h1>
-      <p className="text-muted">Two outputs so far, both public, with code.</p></header>
+      <p className="text-muted">An accepted IEEE paper, an arXiv preprint and an accepted ISRC talk. Code is available for each.</p></header>
     <section aria-labelledby="research-interests">
       <h2 id="research-interests" className="sr-only">Research interests</h2><Interests />
     </section>
