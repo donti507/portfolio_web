@@ -119,3 +119,87 @@ deepProjects['physics-residual-aqa'] = {
   dossier: {venue: 'ISRC 2026, Dhaka University Research Society (Dec 2026)', datasets: ['MTL-AQA clips'],
     stack: ['Python', 'NumPy', 'SciPy', 'ffmpeg', 'Matplotlib', 'ViTPose', 'RTMPose', 'NSAQA']},
 };
+
+const strategies = [
+  {name: 'Random Search', trials: 480, best: '93.10%', mean: 61.26, std: '0.268', cost: 0.144},
+  {name: 'TPE', trials: 328, best: '92.72%', mean: 82.00, std: '0.162', cost: 0.077},
+  {name: 'Hyperband', trials: 160, best: '91.85%', mean: 84.42, std: '0.143', cost: 0.050},
+  {name: 'CMA-ES', trials: 32, best: '50.57%', mean: 44.12, std: '0.020', cost: 0.047},
+];
+const tpeSweep = [
+  {label: '1 worker', x: 1, y: 85.9, note: 'n=37'}, {label: '5 workers', x: 5, y: 88.8, note: 'n=41'},
+  {label: '10 workers', x: 10, y: 61.8, note: 'n=15'}, {label: '20 workers', x: 20, y: 63.3, note: 'n=29'},
+  {label: '40 workers', x: 40, y: 77.9, note: 'n=98'},
+];
+
+deepProjects['budgetaware-hpo'] = {
+  metrics: [
+    {label: 'Trial records', value: '1,336', caption: 'Reported experiment total', chip: '15 Optuna studies', tone: 'neutral', icon: 'files'},
+    {label: 'Parallel capacity', value: '40', caption: 'V100 GPUs at once', chip: 'Eagle HPC, PCSS', tone: 'primary', icon: 'cpu'},
+    {label: 'GPU-h per trial', value: '−65%', caption: 'Hyperband versus Random Search', chip: '0.050 vs 0.144 h', tone: 'coral', icon: 'activity'},
+    {label: 'Clean trials', value: '1,195', caption: 'Retained after auditing the archive', chip: '142 records quarantined', tone: 'teal', icon: 'shield'},
+  ],
+  artifact: {title: 'Cluster and cost', eyebrow: 'Compute budget', split: true, blocks: [
+    {kind: 'status', title: 'SLURM array 6923377 · TPE, CIFAR-10', complete: 32, failed: 8, note: 'Order illustrative; counts real.',
+      caption: 'Across the whole project: 36 array jobs · 1,756 tasks · 991 completed · 732 failed · 33 timed out · 48 GPU nodes.'},
+    {kind: 'scatter', title: 'Accuracy versus cost', xLabel: 'Mean GPU-h per trial', yLabel: 'Mean accuracy (%)',
+      xTicks: [0, 0.04, 0.08, 0.12, 0.16], yTicks: [40, 50, 60, 70, 80, 90, 100],
+      points: strategies.map(method => ({label: method.name, x: method.cost, y: method.mean, tone: method.name === 'Hyperband' ? 'coral' : 'primary'})),
+      zone: {maxX: 0.077, minY: 82}, caption: 'Pooled pre-audit summary (table1_summary.csv).'},
+  ]},
+  sections: [
+    {id: 'question', title: 'The question', base: ['question'], blocks: []},
+    {id: 'importance', title: 'Why it matters', base: ['why'], blocks: []},
+    {id: 'approach', title: 'What I did', blocks: [
+      {kind: 'steps', items: [
+        {title: 'Search space and models', tools: ['PyTorch', 'Optuna'], body: 'ResNet-18 and EfficientNet-B0 on CIFAR-10 and CIFAR-100.'},
+        {title: 'Four strategies', tools: ['Optuna samplers'], body: 'Random Search, TPE, Hyperband and CMA-ES.'},
+        {title: 'SLURM job arrays', tools: ['Eagle HPC'], body: 'Up to 40 concurrent workers shared one Optuna study per setting.'},
+        {title: 'Parallelism sweep', tools: ['TPE'], body: 'Swept 1, 5, 10, 20 and 40 workers.'},
+      ]},
+      {kind: 'table', title: 'Strategies · pooled pre-audit', headers: ['Method', 'Trials', 'Best acc.', 'Mean acc.', 'Std.', 'GPU-h / trial'],
+        rows: strategies.map(method => ({cells: [method.name, method.trials, method.best, method.mean.toFixed(2) + '%', method.std, method.cost.toFixed(3)], tone: method.name === 'Hyperband' ? 'best' : undefined}))},
+      {kind: 'figure', index: 0},
+    ]},
+    {id: 'findings', title: 'I audited my own results', blocks: [
+      {kind: 'funnel', title: 'Archive reconciliation', stages: [
+        {value: '2,211', label: 'JSON files'},
+        {value: '1,337', label: 'Trial records in the audit', note: '874 per-worker snapshots set aside.'},
+        {value: '71', label: 'Colliding trial IDs', note: '142 records quarantined.'},
+        {value: '1,195', label: 'Clean trials'},
+      ]},
+      {kind: 'text', text: 'The archive held 2,211 JSON files. 874 were per-worker snapshots of study state, not trials. 71 trial IDs collided across workers (142 records with different outcomes), so all were quarantined rather than choosing one. Each (method, dataset, workers) setting is a single shared Optuna study, so trials are not independent replicates. In the earliest runs, filenames had no task ID, so collisions there were overwritten at collection time and cannot be detected.'},
+      {kind: 'line', title: 'TPE as parallelism grows (audited)', xLabel: 'Workers', yLabel: 'Mean best-val accuracy (%)',
+        xTicks: [1, 5, 10, 20, 40], yTicks: [60, 70, 80, 90, 100], points: tpeSweep,
+        caption: 'One study per setting and uneven trial counts: descriptive only.'},
+      {kind: 'figure', index: 1},
+    ]},
+    {id: 'engineering', title: 'Engineering note', blocks: [{kind: 'beforeAfter', title: 'Shared SQLite study startup', file: 'train_v2.py',
+      before: '40 workers call optuna.create_study(..., load_if_exists=True) on one SQLite file at the same moment. Table creation collides and workers crash.',
+      after: `# Stagger worker starts to reduce SQLite conflicts
+stagger = random.uniform(0, min(args.trial_id * 0.1, 10))
+time.sleep(stagger)
+
+def create_study_with_retry(study_name, storage, sampler, pruner, max_retries=10):
+    for attempt in range(max_retries):
+        try:
+            return optuna.create_study(study_name=study_name, storage=storage,
+                direction="maximize", sampler=sampler, pruner=pruner, load_if_exists=True)
+        except Exception:
+            time.sleep(random.uniform(1, 5) * (attempt + 1))
+
+sampler = optuna.samplers.TPESampler(seed=42, constant_liar=True)`,
+    }]},
+    {id: 'limits', title: 'What this does not show', blocks: [{kind: 'limits', items: [
+      {title: 'One study per setting', body: 'Rankings are preliminary until runs are repeated with independent seeds.'},
+      {title: 'Undetectable early collisions', body: 'The first archive’s filename scheme overwrote duplicates.'},
+      {title: 'Unreliable CIFAR-100 arrays', body: 'Many CIFAR-100 and CMA-ES array jobs failed entirely (732 of 1,756 tasks failed overall).'},
+      {title: 'Narrow scope', body: 'Two small CNNs on CIFAR may not transfer to larger models.'},
+    ]}]},
+    {id: 'reproduce', title: 'Reproduce it', blocks: [{kind: 'terminal', file: 'hpo_v2.slurm',
+      code: 'sbatch --array=1-40%40 hpo_v2.slurm tpe cifar10 40\nsbatch --array=1-40%40 hpo_v2.slurm hyperband cifar10 40'}]},
+  ],
+  provenance: 'Strategy results are pooled and pre-audit. The TPE sweep uses the deduplicated audit data.',
+  dossier: {venue: 'Eagle HPC, PCSS Poznań · grant pl0844-01', equipment: 'Tesla V100-SXM2-32GB',
+    stack: ['Python 3.10', 'PyTorch 2.6', 'Optuna 3.6.1', 'SLURM', 'conda'], datasets: ['CIFAR-10', 'CIFAR-100']},
+};
