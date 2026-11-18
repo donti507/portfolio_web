@@ -162,16 +162,20 @@ export function SideCard({ title, children }: { title: string; children: ReactNo
 }
 
 export function CitationCard({ publication, compact = false }: {
-  publication: { title: string; authors: string; kind: string; venue: string; note: string; links: object; bibtex?: string };
+  publication: { title: string; authors: string; kind: string; venue: string; note: string; links: object; bibtex?: string; pendingPaper?: string };
   compact?: boolean;
 }) {
   const labels: Record<string, string> = { paper: 'Read the preprint', code: 'Code', prereg: 'Preregistration', demo: 'Demo', data: 'Data' };
   return <article className={panel + ' space-y-3 p-5'}>
-    <p className={label}>{publication.kind} · {publication.venue}</p>
+    {publication.pendingPaper ? <div className="space-y-2">
+      <StatusPill>{publication.kind}</StatusPill><p className={label}>{publication.venue}</p>
+    </div> : <p className={label}>{publication.kind} · {publication.venue}</p>}
     <h3>{publication.title}</h3><p className="text-sm text-muted">{publication.authors}</p>
     <p className="text-sm text-muted italic">{publication.note}</p>
     {!compact && <div className="flex flex-wrap gap-2">{Object.entries(publication.links).map(([kind, href]) =>
-      href && labels[kind] && <Button key={kind} href={href}>{labels[kind]}</Button>)}</div>}
+      href && labels[kind] && <Button key={kind} href={href}>{labels[kind]}</Button>)}
+      {publication.pendingPaper && <span aria-disabled="true" className="inline-flex items-center rounded-full border border-line bg-tint px-3 py-1 text-sm text-muted">{publication.pendingPaper}</span>}
+    </div>}
     {publication.bibtex && <details><summary className="cursor-pointer text-sm font-semibold text-primary">Cite (BibTeX)</summary>
       <CodeBlock value={publication.bibtex} /></details>}
   </article>;

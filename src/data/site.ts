@@ -46,6 +46,15 @@ export const researchInterests = [
 
 export const publications = [
   {
+    kind: 'Accepted · IEEE · Oral',
+    title: 'Structural and Attack-Mechanism Generalization in a Domain-Randomized Detector–Responder Framework for Autonomous Cyber Defense',
+    authors: 'M. A. A. Yad and N. T. Nabila',
+    venue: '29th International Conference on Computer and Information Technology (IEEE ICCIT 2026)',
+    note: 'Accepted for oral presentation · Paper ID 648 · Double-blind peer review with at least two reviewers. The conference received 3,574 submissions. Registered papers are submitted to IEEE Xplore.',
+    pendingPaper: 'IEEE Xplore (after the conference)',
+    links: { code: 'https://github.com/donti507/domain-randomized-ippo-cyber-defense' },
+  },
+  {
     kind: 'Preprint',
     title: 'Reconstruction differences rival individual differences in the fly compass connectome and break trained circuit models',
     authors: 'M. A. A. Yad and N. T. Nabila',
