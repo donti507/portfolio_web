@@ -394,3 +394,64 @@ deepProjects['zen-os'] = {
     ]},
   ],
 };
+
+const verifierRules: Row[] = [
+  {cells: ['V1 · Schema', 'Required fields present; codes valid in FpML enumerations', '—', 'HARD on missing or invalid']},
+  {cells: ['V2 · Grounding', 'Value appears in or normalises from its cited span', 'Edit distance / relative difference', 'HARD above threshold; SOFT near']},
+  {cells: ['V3 · Temporal', 'Trade ≤ effective < termination; tenor matches dates', 'Days', 'HARD']},
+  {cells: ['V4 · Calendar', 'Regenerate the schedule with QuantLib and compare', 'Days off', 'HARD when dates differ']},
+  {cells: ['V5 · Accrual', 'Recompute stated amounts', 'Currency units', 'HARD beyond rounding']},
+  {cells: ['V6 · Cross-field', 'Index/currency, tenor and leg notionals consistent', 'Categorical', 'HARD or SOFT']},
+  {cells: ['V7 · Convention prior', 'Day count/calendar vs market standard', 'Categorical', 'SOFT only']},
+];
+const defects: [string, number[]][] = [
+  ['Contradiction', [2,6]], ['Amendment', []], ['Non-standard calendar', [4]], ['Swapped legs', []],
+  ['Scale error', [2,5]], ['Unusual day count', [7]], ['Stub ambiguity', [4]], ['Multiple notionals', []],
+  ['Legacy index fallback', [6]], ['OCR digit corruption', [2]], ['Missing information', [1]], ['Prompt injection (security test)', []],
+];
+const rules = verifierRules.map((_, index) => index + 1);
+
+deepProjects['trust-but-verify'] = {
+  metrics: [
+    {label: 'Verifier rule families', value: '7', caption: 'Schema through convention checks', tone: 'primary', icon: 'shield'},
+    {label: 'Defect types', value: '12', caption: 'Synthetic examples with expected rule triggers', tone: 'coral', icon: 'target'},
+    {label: 'Filings screened', value: '300', caption: 'Seeded sample across four eras', tone: 'neutral', icon: 'files'},
+    {label: 'Automated tests', value: '178', caption: 'Tests for the tooling', tone: 'teal', icon: 'activity'},
+  ],
+  artifact: {title: 'From contract to a review decision', eyebrow: 'Verification pipeline', blocks: [{
+    kind: 'flow', title: 'Field-level workflow', stages: ['Contract (PDF/HTML)', 'LLM proposes field and evidence span', 'QuantLib/CDM verifier · never edits values', 'Cost-aware selector · conformal risk control'],
+    branches: ['Auto-accept', 'Human review'],
+    examples: ['Required field missing → V1 Schema: HARD', 'Calendar differs from regenerated schedule → V4 Calendar: HARD'],
+  }]},
+  sections: [
+    {id: 'question', title: 'The question', base: ['question', 'why'], blocks: []},
+    {id: 'rules', title: 'The verifier rules', blocks: [{kind: 'table', title: 'Rule families', headers: ['Rule', 'Checks', 'Residual', 'Verdict'], rows: verifierRules}]},
+    {id: 'defects', title: 'The defect test bench', blocks: [{kind: 'table', title: 'Defects and expected triggers',
+      headers: ['Defect', ...rules.map(rule => 'V' + rule), 'Expected result'],
+      rows: defects.map(([name, triggers]) => ({cells: [name, ...rules.map(rule => triggers.includes(rule) ? '✓' : '—'), triggers.length ? 'Rule trigger' : 'Silent']})),
+      caption: 'Predictions to test, not observed results.'}]},
+    {id: 'annotation', title: 'How labels are made', blocks: [{kind: 'notes', items: [
+      {title: 'Explicit', body: 'Value and exact span in the document.'}, {title: 'By reference', body: 'Supplied by an incorporated definition.'},
+      {title: 'Ambiguous', body: 'Competing statements, escalate.', tone: 'coral'},
+      {title: 'Absent', body: 'No applicable statement. A positive human decision.', tone: 'teal'},
+    ]}]},
+    {id: 'pipeline', title: 'Data pipeline', blocks: [{kind: 'steps', items: [
+      {title: 'EDGAR scope', tools: ['EDGAR'], body: '4 quoted swap phrases from 2001 onward across 8-K, 10-Q, 10-K and exhibits. 4 requests/s with backoff.'},
+      {title: 'Hash-verified storage', tools: ['SHA-256'], body: 'The manifest records file hashes. Altered files are never replaced.'},
+      {title: 'Seeded screen', body: '75 filings per era (2001–05, 2006–08, 2009–21, 2022–now), for 300 total.'},
+      {title: 'Synthetic generator', body: '6 layouts with labelled defects: term sheet, letter, two-column, label–value, legal preamble and dealer caps.'},
+    ]}]},
+    {id: 'protocol', title: 'Five rules that never bend', blocks: [{kind: 'list', items: [
+      'Never touch the real test split before preregistration.', 'The verifier never edits a value.', 'An LLM never writes a gold label.',
+      'Never mix collections.', 'Cache every model output by input hash.',
+    ]}]},
+    {id: 'progress', title: 'Progress', blocks: [{kind: 'timeline', title: 'Study milestones', anchor: 'Annotation in progress', stages: [
+      {title: 'EDGAR corpus', body: 'Complete'}, {title: 'Synthetic generator', body: 'Complete'}, {title: 'Annotation tools', body: 'Complete'},
+      {title: 'Annotation', body: 'In progress'}, {title: 'Preregistration', body: 'Upcoming'}, {title: 'First models', body: 'Upcoming'},
+    ]}]},
+    {id: 'limits', title: 'Limits', blocks: [{kind: 'limits', items: [
+      {title: 'Test split locked', body: 'No model results yet; the real test split stays locked until preregistration.'},
+    ]}]},
+  ],
+  dossier: {datasets: ['SEC EDGAR filings', 'Synthetic documents']},
+};
