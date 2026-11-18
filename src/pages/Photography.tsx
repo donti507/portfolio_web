@@ -57,7 +57,7 @@ export default function Photography() {
     <header className="space-y-3 border-b border-line pb-6">
       <p className={label}>Photography</p>
       <h1 ref={title} tabIndex={-1}>Through the lens</h1>
-      <p className="text-muted">Science events, Wrocław and places I've been. All photos are my own.</p>
+      <p className="text-muted">Wrocław in every season, places I've travelled and the corners where the work happens. All photos are my own.</p>
     </header>
     <FilterChips name="Photo categories" value={category}
       options={categories.map(item => ({value: item.value, label: `${item.label} (${item.value === 'all' ? photos.length : photos.filter(photo => photo.category === item.value).length})`}))}
