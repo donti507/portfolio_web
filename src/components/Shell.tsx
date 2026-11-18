@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Github, GraduationCap, Mail, Menu, Moon, Sun, X } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { person } from '../data/site';
 import { asset, hasAsset } from '../data/assets';
+import tracks from '../data/music.json';
+
+const MusicPlayer = lazy(() => import('./MusicPlayer'));
 
 const navigation = [
   ['Home', '/'], ['Research', '/research'], ['Projects', '/projects'],
-  ['CV', '/cv'], ['About', '/about'], ['Contact', '/contact'],
+  ['CV', '/cv'], ['About', '/about'], ['Photography', '/photography'], ['Contact', '/contact'],
 ];
 export const email = 'mailto:' + person.email;
 export const cv = hasAsset(person.links.cv) ? asset(person.links.cv) : undefined;
@@ -61,6 +64,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <a className="hidden p-2 sm:block" aria-label="Google Scholar" href={person.links.scholar}><GraduationCap size={20} /></a>
           <a className="hidden p-2 sm:block" aria-label="Email" href={email}><Mail size={20} /></a>
           {themeButton}
+          {!!tracks.length && <Suspense fallback={null}><MusicPlayer /></Suspense>}
           <button type="button" className="p-2 lg:hidden" aria-label="Open menu" onClick={() => menu.current?.showModal()}><Menu /></button>
         </div>
       </div>

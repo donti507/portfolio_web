@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+/public/photos/*-800.webp
+/public/photos/*-1600.webp

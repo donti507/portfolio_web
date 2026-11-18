@@ -1,0 +1,53 @@
+{
+  "axeVersion": "4.14.1",
+  "checks": [
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "empty-gallery",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "desktop",
+      "name": "empty-about",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "empty-gallery",
+      "violations": []
+    },
+    {
+      "theme": "light",
+      "device": "mobile",
+      "name": "empty-about",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "empty-gallery",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "desktop",
+      "name": "empty-about",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "empty-gallery",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "device": "mobile",
+      "name": "empty-about",
+      "violations": []
+    }
+  ]
+}
