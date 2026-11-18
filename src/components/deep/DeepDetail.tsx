@@ -33,7 +33,7 @@ export function DeepDetail({ project, content, previous, next }: {project: Proje
       </div>
       <h1 className="max-w-5xl">{project.title}</h1>
       <p className="max-w-4xl text-lg text-muted">{project.oneLiner}</p>
-      <p className="text-sm text-muted">{project.role}{project.collaborators && <> · {project.collaborators}</>}</p>
+      <p className="text-sm text-muted">{project.role}{project.collaborators && !project.role.includes(project.collaborators) && <> · {project.collaborators}</>}</p>
       <div className="flex flex-wrap gap-2">{links.map(link => <Button key={link.href} href={link.href} variant={link === primary ? 'primary' : 'secondary'}>
         {link.kind === 'paper' ? 'Read the preprint' : link.label}
       </Button>)}</div>

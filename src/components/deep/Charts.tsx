@@ -181,3 +181,54 @@ export function RangeBars({ title, max, rows, caption }: Extract<Block, {kind: '
     </Graphic>
   </Chart>;
 }
+
+export function ContainmentGrid({ title, profiles, rows }: Extract<Block, {kind: 'containment'}>) {
+  return <Chart title={title} headers={['Topology', ...profiles]}
+    rows={rows.map(row => [row.label, ...row.cells.map(cell => `${cell.reward.toFixed(1)} reward / ${cell.containment}% contained`)])}
+    caption="Cells show reward. Teal and ✓ indicate 100% containment. Coral and × indicate 0%.">
+    <Graphic title={`${title}: rewards and containment by topology and attacker profile`} height={269}>
+      {profiles.map((profile, column) => <text key={profile} x={128 + column * 80} y="20" textAnchor="middle" fontSize="11" fill={muted}>
+        <tspan x={128 + column * 80}>{profile.replace(' (unseen)', '')}</tspan>
+        {profile.includes('unseen') && <tspan x={128 + column * 80} dy="15">unseen</tspan>}
+      </text>)}
+      {rows.map((row, index) => <g key={row.label} transform={`translate(0 ${48 + index * 42})`}>
+        <text x="3" y="17" fontSize="12" fill={text}>{row.label.split(' ')[0]}</text>
+        {row.label.includes('unseen') && <text x="3" y="32" fontSize="11" fill={muted}>unseen</text>}
+        {row.cells.map((cell, column) => <g key={column} transform={`translate(${90 + column * 80} 0)`}>
+          <rect width="76" height="38" rx="4" fill={cell.containment ? colors.teal : colors.coral} opacity=".18" />
+          <text x="38" y="16" textAnchor="middle" fill={text} fontSize="12">{cell.reward.toFixed(1)}</text>
+          <text x="38" y="31" textAnchor="middle" fill={text} fontSize="11">{cell.containment ? '✓' : '×'} {cell.containment}%</text>
+        </g>)}
+      </g>)}
+    </Graphic>
+  </Chart>;
+}
+
+export function RewardWhiskers({ title, rows }: Extract<Block, {kind: 'whiskers'}>) {
+  const ticks = [-250, -100, 0, 100, 200, 300];
+  const x = (value: number) => scale(value, ticks[0], ticks[ticks.length - 1], 93, 394);
+  return <Chart title={title} headers={['Topology', 'Baseline mean', 'Baseline std', 'Domain-randomised mean', 'Domain-randomised std']}
+    rows={rows.map(row => [row.label, row.baseline.mean.toFixed(1), row.baseline.std.toFixed(1), row.randomised.mean.toFixed(1), row.randomised.std.toFixed(1)])}
+    caption="Points show mean reward. Whiskers extend one standard deviation on either side.">
+    <Graphic title={`${title}: baseline and domain-randomised mean rewards with standard-deviation whiskers`} height={285}>
+      {ticks.map(tick => <g key={tick}><path d={`M${x(tick)} 39V243`} stroke={rule} />
+        <text x={x(tick)} y="265" textAnchor="middle" fontSize="12" fill={muted}>{tick}</text>
+      </g>)}
+      <circle cx="12" cy="15" r="4" fill={colors.coral} /><text x="23" y="19" fontSize="12" fill={text}>Baseline</text>
+      <circle cx="122" cy="15" r="4" fill={colors.teal} /><text x="133" y="19" fontSize="12" fill={text}>Domain-randomised</text>
+      {rows.map((row, index) => <g key={row.label} transform={`translate(0 ${51 + index * 40})`}>
+        <text x="3" y="7" fontSize="12" fill={text}>{row.label.split(' ')[0]}</text>
+        {row.label.includes('unseen') && <text x="3" y="22" fontSize="11" fill={muted}>unseen</text>}
+        {[row.baseline, row.randomised].map(({mean, std}, series) => {
+          const y = 2 + series * 13;
+          const low = x(mean - std);
+          const high = x(mean + std);
+          const color = series ? colors.teal : colors.coral;
+          return <g key={series}><path d={`M${low} ${y - 4}v8 M${low} ${y}H${high} M${high} ${y - 4}v8`} fill="none" stroke={color} strokeWidth="1.5" />
+            <circle cx={x(mean)} cy={y} r="4" fill={color} />
+          </g>;
+        })}
+      </g>)}
+    </Graphic>
+  </Chart>;
+}

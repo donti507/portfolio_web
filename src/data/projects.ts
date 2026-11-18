@@ -4,7 +4,7 @@
 // Entries marked `verify: true` were carried over from the old site and have NOT been checked.
 
 export type ProjectTier = 'research' | 'software' | 'engineering';
-export type ProjectStatus = 'Preprint' | 'Accepted talk' | 'Ongoing' | 'Pre-analysis' | 'Under audit' | 'Live' | 'Completed';
+export type ProjectStatus = 'Preprint' | 'Accepted (IEEE ICCIT 2026, oral)' | 'Accepted talk' | 'Ongoing' | 'Pre-analysis' | 'Under audit' | 'Live' | 'Completed';
 
 export interface Stat { value: string; label: string; }
 export interface Figure { src: string; alt: string; caption: string; }
@@ -37,6 +37,47 @@ export interface ProjectDetail {
 }
 
 export const projects: ProjectDetail[] = [
+  {
+    slug: 'cyber-defense-generalization',
+    title: 'Do AI cyber defenders generalise, or just memorise their training network?',
+    shortTitle: 'Cyber-defense generalisation',
+    tier: 'research',
+    tags: ['RL', 'Security', 'Generalisation'],
+    dates: '2026',
+    status: 'Accepted (IEEE ICCIT 2026, oral)',
+    role: 'First author, with N. T. Nabila (Comilla University)',
+    collaborators: 'N. T. Nabila (Comilla University)',
+    oneLiner: 'Randomising the training networks taught the defenders to protect networks they had never seen, but not to stop an attack they had never seen.',
+    question: 'Most multi-agent RL cyber defenders are trained and tested on one fixed network against one fixed attacker. Do they learn to defend, or do they memorise that one scenario?',
+    why: 'A defender that only works on its training network is useless the day the network changes. Testing unseen networks and unseen attacks separately shows which kind of generalisation is real.',
+    approach: [
+      'A Detector flags nodes and a Responder re-images them. Both trained with Independent PPO in Microsoft’s CyberBattleSim in 50-step episodes.',
+      'Each training episode samples a random tree of 7–10 nodes and an aggressive, stealthy or opportunistic scripted attacker.',
+      'The matched baseline trains the same pair on a fixed, hand-built 7-node network.',
+      'Held-out tests use topo_4, topo_5 and a cloud-pivot mechanism, with 3 training seeds and 20 deterministic episodes per test cell.',
+    ],
+    findings: [
+      'Domain-randomised defenders contained 100% of attacks from seen profiles on both unseen test networks.',
+      'The baseline varied widely across seeds. Its positive topo_2 result in the single-seed matrix did not carry over across seeds.',
+      'Against the held-out cloud-pivot mechanism, both defenders scored −107.0 with 0% containment. Topology and behaviour randomisation did not confer robustness to this new attack type.',
+    ],
+    limits: ['Small simulated networks of 7–10 nodes.', 'Scripted attackers.', 'One held-out attack mechanism.', 'Three training seeds.'],
+    stats: [
+      {value: '100%', label: 'containment on seen profiles with randomisation'},
+      {value: '0%', label: 'containment on the held-out attack'},
+      {value: '172.7', label: 'baseline reward std across seeds on topo_3'},
+      {value: '3', label: 'training seeds · 20 episodes per test cell'},
+    ],
+    figures: [
+      {src: 'projects/cyber-defense-generalization/architecture_diagram.png', alt: 'Detector and Responder architecture in the simulation', caption: 'The Detector flags nodes and the Responder re-images flagged nodes in CyberBattleSim.'},
+      {src: 'projects/cyber-defense-generalization/multiseed_chart.png', alt: 'Published figure comparing baseline and domain-randomised rewards across training seeds', caption: 'Source figure for the aggressive-attacker evaluation across three training seeds.'},
+    ],
+    stack: ['Python', 'PyTorch', 'Stable-Baselines3 (PPO)', 'Gymnasium', 'CyberBattleSim', 'pytest'],
+    links: [{label: 'Code', href: 'https://github.com/donti507/domain-randomized-ippo-cyber-defense', kind: 'code'}],
+    reproduce: 'pip install -r requirements.txt && pip install -e .\npytest -q\npython scripts/train.py --method dr --seeds 0 1 2\npython scripts/evaluate.py --mode multiseed',
+    next: 'Test against adaptive attackers and larger networks, and add attack-mechanism randomisation to target the cloud-pivot failure.',
+    featured: true,
+  },
   {
     slug: 'fly-connectome',
     title: 'Reconstruction differences rival individual differences in the fly compass connectome',
@@ -100,7 +141,8 @@ export const projects: ProjectDetail[] = [
     tags: ['Computer Vision', 'Physics-informed ML'],
     dates: 'Nov 2026',
     status: 'Accepted talk',
-    role: 'Sole author',
+    role: 'First author, with N. T. Nabila (Comilla University)',
+    collaborators: 'N. T. Nabila',
     oneLiner: 'Can conservation of angular momentum judge a dive from TV footage? Not yet. Here is exactly how far off the pose models are.',
     question:
       'In the air, a diver’s angular momentum is conserved. A break in that should flag a pose or execution problem without any labels. How precise must monocular pose be before this check works, and are current models that precise?',

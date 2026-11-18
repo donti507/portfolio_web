@@ -1,0 +1,3 @@
+Content guard passed: 97 built files scanned, 76 prohibited strings checked.
+iccit-probe.txt: Sole author
+iccit-probe.txt: sole author

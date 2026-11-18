@@ -1,0 +1,125 @@
+{
+  "axeVersion": "4.14.1",
+  "report": [
+    {
+      "device": "desktop",
+      "theme": "light",
+      "name": "home",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "light",
+      "name": "research",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "light",
+      "name": "project",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "light",
+      "name": "cv",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "light",
+      "name": "isrc",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "name": "home",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "name": "research",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "name": "project",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "name": "cv",
+      "violations": []
+    },
+    {
+      "device": "desktop",
+      "theme": "dark",
+      "name": "isrc",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "name": "home",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "name": "research",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "name": "project",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "name": "cv",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "light",
+      "name": "isrc",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "name": "home",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "name": "research",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "name": "project",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "name": "cv",
+      "violations": []
+    },
+    {
+      "device": "mobile",
+      "theme": "dark",
+      "name": "isrc",
+      "violations": []
+    }
+  ]
+}
