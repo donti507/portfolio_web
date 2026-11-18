@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "src": "music/hit-the-road.mp3",
+    "title": "hit the road",
+    "artist": "rxseboy & jomie",
+    "license": "Permission granted",
+    "source": "https://www.youtube.com/watch?v=7_vAGTk0_rY"
+  },
+  {
+    "src": "music/heros-come-back.mp3",
+    "title": "Hero’s Come Back!!",
+    "artist": "nobodyknows+",
+    "license": "Permission granted",
+    "source": "https://www.youtube.com/watch?v=EBNl8bwdVcA"
+  }
+]

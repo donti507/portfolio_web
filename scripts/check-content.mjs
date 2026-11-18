@@ -39,7 +39,7 @@ const prohibited = new Set([
 
 const publicPhotos = fileURLToPath(new URL('../public/photos/', import.meta.url));
 const music = JSON.parse(await readFile(new URL('../src/data/music.json', import.meta.url), 'utf8'));
-const licenses = new Set(['own', 'CC0', 'CC-BY-4.0', 'Pixabay Content License']);
+const licenses = new Set(['own', 'CC0', 'CC-BY-4.0', 'Pixabay Content License', 'Permission granted']);
 const fields = ['src', 'title', 'artist', 'license', 'source'];
 
 function isWebSource(value) {

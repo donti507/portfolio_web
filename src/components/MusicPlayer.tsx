@@ -141,7 +141,10 @@ export default function MusicPlayer() {
   }
 
   const canPlay = Boolean(track && available);
-  if (!canPlay && !youtubeTracks.length) return null;
+  const linkedTracks = canPlay ? youtubeTracks.filter(item =>
+    !tracks.some((entry, index) => !failed.current.has(index) && entry.source === `https://www.youtube.com/watch?v=${item.id}`),
+  ) : youtubeTracks;
+  if (!canPlay && !linkedTracks.length) return null;
   return <div ref={root} className="relative" onKeyDown={event => {
     if (event.key === 'Escape' && open) {
       event.stopPropagation();
@@ -208,8 +211,8 @@ export default function MusicPlayer() {
         <h2 className="font-heading text-xl">Music</h2>
         <p className="text-sm text-muted">These tracks are available on YouTube.</p>
       </div>}
-      {youtubeTracks.length > 0 && <ul aria-label="YouTube tracks" className="space-y-1 border-t border-line pt-2">
-        {youtubeTracks.map(item => <li key={item.id}>
+      {linkedTracks.length > 0 && <ul aria-label="YouTube tracks" className="space-y-1 border-t border-line pt-2">
+        {linkedTracks.map(item => <li key={item.id}>
           <a href={`https://www.youtube.com/watch?v=${item.id}`} target="_blank" rel="noopener noreferrer"
             className="flex items-center justify-between gap-2 rounded px-1 py-1.5 text-sm hover:bg-tint">
             <span>{item.title}<span className="block text-xs text-muted">{item.artist}</span></span>
